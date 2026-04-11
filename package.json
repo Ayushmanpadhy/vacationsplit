@@ -1,0 +1,9 @@
+{
+  "name": "vacation-split-monorepo",
+  "version": "1.0.0",
+  "description": "Monorepo for VacationSplit",
+  "scripts": {
+    "build:prod": "cd frontend && npm install && npm run build && cd ../backend && npm install",
+    "start": "cd backend && npm start"
+  }
+}

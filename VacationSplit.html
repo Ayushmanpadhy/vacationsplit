@@ -1,0 +1,1766 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>VacationSplit ✈️</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --primary:        #FF6B35;
+  --primary-dark:   #E85D2F;
+  --primary-light:  #FF8C5A;
+  --primary-faint:  #FFF3EE;
+  --bg:             #F7F4F0;
+  --surface:        #FFFFFF;
+  --surface-alt:    #FFF8F5;
+  --text:           #1A1A1A;
+  --text-sec:       #6B6B6B;
+  --text-muted:     #A0A0A0;
+  --border:         #E8E4E0;
+  --success:        #2D9B6F;
+  --success-light:  #E8F7F1;
+  --danger:         #E5484D;
+  --danger-light:   #FDEAEA;
+  --warning:        #F5A623;
+  --warning-light:  #FEF3E2;
+  --radius-card:    12px;
+  --radius-btn:     8px;
+  --radius-pill:    50px;
+  --shadow:         0 2px 8px rgba(0,0,0,0.08);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { font-size: 15px; -webkit-tap-highlight-color: transparent; }
+
+body {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+#app { min-height: 100vh; }
+
+/* ── Typography ── */
+h1 { font-size: 28px; font-weight: 700; }
+h2 { font-size: 20px; font-weight: 600; }
+h3 { font-size: 16px; font-weight: 600; }
+p  { font-size: 15px; }
+.label { font-size: 13px; font-weight: 500; color: var(--text-sec); }
+.tiny  { font-size: 12px; color: var(--text-muted); }
+
+/* ── Buttons ── */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  padding: 12px 20px; border-radius: var(--radius-btn);
+  font-family: inherit; font-size: 14px; font-weight: 600;
+  cursor: pointer; border: none; transition: all 0.15s ease;
+  text-decoration: none; white-space: nowrap;
+}
+.btn-primary { background: var(--primary); color: #fff; }
+.btn-primary:hover { background: var(--primary-dark); }
+.btn-primary:disabled { background: #F0C0A8; cursor: not-allowed; }
+.btn-outline {
+  background: transparent; color: var(--primary);
+  border: 1.5px solid var(--primary);
+}
+.btn-outline:hover { background: var(--primary-faint); }
+.btn-ghost { background: transparent; color: var(--text-sec); border: 1.5px solid var(--border); }
+.btn-ghost:hover { background: var(--surface); border-color: var(--text-muted); }
+.btn-danger { background: var(--danger-light); color: var(--danger); border: none; }
+.btn-danger:hover { background: #f9caca; }
+.btn-full { width: 100%; }
+.btn-sm { padding: 7px 14px; font-size: 13px; }
+.btn-icon {
+  width: 36px; height: 36px; padding: 0; border-radius: 8px;
+  background: var(--surface); border: 1.5px solid var(--border);
+  color: var(--text-sec); cursor: pointer; display: inline-flex;
+  align-items: center; justify-content: center; transition: all 0.15s;
+}
+.btn-icon:hover { border-color: var(--primary); color: var(--primary); }
+
+/* ── Inputs ── */
+.input-group { display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px; }
+.input-group label { font-size: 13px; font-weight: 600; color: var(--text); }
+input, textarea, select {
+  font-family: inherit; font-size: 15px; color: var(--text);
+  background: var(--surface); border: 1.5px solid var(--border);
+  border-radius: var(--radius-btn); padding: 12px 16px;
+  width: 100%; outline: none; transition: border-color 0.15s;
+  -webkit-appearance: none;
+}
+input:focus, textarea:focus, select:focus { border-color: var(--primary); }
+input::placeholder, textarea::placeholder { color: var(--text-muted); }
+.input-prefix-wrap { position: relative; }
+.input-prefix-wrap .prefix {
+  position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+  font-size: 15px; font-weight: 600; color: var(--text-sec);
+}
+.input-prefix-wrap input { padding-left: 30px; }
+.input-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.field-error { font-size: 12px; color: var(--danger); margin-top: 4px; }
+
+/* ── Cards ── */
+.card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius-card); padding: 20px;
+}
+.card-sm { padding: 14px 16px; }
+
+/* ── Page layout ── */
+.page { display: none; min-height: 100vh; padding-bottom: 80px; }
+.page.active { display: block; }
+.page-inner { max-width: 700px; margin: 0 auto; padding: 0 16px; }
+.page-inner-sm { max-width: 480px; margin: 0 auto; padding: 0 16px; }
+
+/* ── Top Bar ── */
+.top-bar {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(247,244,240,0.92); backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--border);
+  padding: 12px 16px; display: flex; align-items: center; gap: 12px;
+}
+.top-bar-title { font-size: 16px; font-weight: 700; flex: 1; text-align: center; }
+.top-bar-side { width: 36px; }
+.back-btn {
+  width: 36px; height: 36px; border-radius: 8px; border: 1.5px solid var(--border);
+  background: var(--surface); display: flex; align-items: center; justify-content: center;
+  cursor: pointer; color: var(--text); transition: all 0.15s; font-size: 18px;
+}
+.back-btn:hover { border-color: var(--primary); color: var(--primary); }
+.trip-code-pill {
+  background: var(--primary-faint); color: var(--primary);
+  font-size: 12px; font-weight: 700; padding: 4px 10px;
+  border-radius: var(--radius-pill); cursor: pointer; letter-spacing: 0.05em;
+  border: 1.5px solid #FFD4C0; transition: all 0.15s;
+}
+.trip-code-pill:hover { background: #FFE8DC; }
+
+/* ── Bottom Nav ── */
+.bottom-nav {
+  position: fixed; bottom: 0; left: 0; right: 0; z-index: 100;
+  background: var(--surface); border-top: 1px solid var(--border);
+  display: flex; padding: 8px 0 16px;
+}
+.nav-item {
+  flex: 1; display: flex; flex-direction: column; align-items: center;
+  gap: 3px; cursor: pointer; padding: 6px 0; transition: all 0.15s;
+  border: none; background: none; font-family: inherit;
+}
+.nav-item .nav-icon { font-size: 22px; line-height: 1; }
+.nav-item .nav-label { font-size: 11px; font-weight: 600; color: var(--text-muted); }
+.nav-item.active .nav-label { color: var(--primary); }
+.nav-item.active .nav-icon { filter: none; }
+.nav-item .nav-icon-svg {
+  width: 24px; height: 24px; stroke: var(--text-muted); fill: none;
+  stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+}
+.nav-item.active .nav-icon-svg { stroke: var(--primary); }
+
+/* ── Avatar ── */
+.avatar {
+  width: 36px; height: 36px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px; font-weight: 700; flex-shrink: 0;
+}
+.avatar-sm { width: 28px; height: 28px; font-size: 11px; }
+.avatar-lg { width: 48px; height: 48px; font-size: 18px; }
+.avatar-xs { width: 22px; height: 22px; font-size: 9px; }
+
+/* ── Badges / Pills ── */
+.badge {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 3px 10px; border-radius: var(--radius-pill);
+  font-size: 12px; font-weight: 600;
+}
+.badge-success { background: var(--success-light); color: var(--success); }
+.badge-danger  { background: var(--danger-light);  color: var(--danger); }
+.badge-warning { background: var(--warning-light); color: var(--warning); }
+.badge-primary { background: var(--primary-faint); color: var(--primary); }
+.badge-muted   { background: #F0EDE8; color: var(--text-sec); }
+
+/* ── Toast ── */
+#toast-container {
+  position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%);
+  z-index: 9999; display: flex; flex-direction: column; gap: 8px;
+  pointer-events: none;
+}
+.toast {
+  background: var(--text); color: #fff;
+  padding: 12px 20px; border-radius: var(--radius-pill);
+  font-size: 14px; font-weight: 500; white-space: nowrap;
+  animation: toastIn 0.25s ease forwards;
+  pointer-events: none;
+}
+.toast.toast-success { background: var(--success); }
+.toast.toast-error   { background: var(--danger); }
+.toast.hide { animation: toastOut 0.25s ease forwards; }
+@keyframes toastIn  { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }
+@keyframes toastOut { from { opacity:1; transform:translateY(0); } to { opacity:0; transform:translateY(12px); } }
+
+/* ── Modal ── */
+#modal-overlay {
+  position: fixed; inset: 0; z-index: 500;
+  background: rgba(0,0,0,0.45);
+  display: flex; align-items: flex-end; justify-content: center;
+  padding: 0 0 24px;
+}
+#modal-overlay.hidden { display: none; }
+.modal {
+  background: var(--surface); border-radius: 16px 16px 12px 12px;
+  padding: 24px; width: 100%; max-width: 480px;
+}
+.modal h3 { margin-bottom: 8px; }
+.modal p  { color: var(--text-sec); font-size: 14px; margin-bottom: 20px; }
+.modal-actions { display: flex; gap: 10px; }
+.modal-actions .btn { flex: 1; }
+
+/* ── Skeleton ── */
+.skeleton {
+  background: linear-gradient(90deg, #EDE9E4 25%, #E5E1DC 50%, #EDE9E4 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s infinite;
+  border-radius: 8px;
+}
+@keyframes shimmer { 0%{background-position:200% 0} 100%{background-position:-200% 0} }
+
+/* ── Divider ── */
+.divider { height: 1px; background: var(--border); margin: 20px 0; }
+.section-heading {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 12px;
+}
+.section-heading h3 { font-size: 16px; }
+
+/* ── Empty State ── */
+.empty-state {
+  text-align: center; padding: 48px 24px;
+  display: flex; flex-direction: column; align-items: center; gap: 12px;
+}
+.empty-icon {
+  width: 72px; height: 72px; border-radius: 50%;
+  background: var(--primary-faint); display: flex;
+  align-items: center; justify-content: center; font-size: 32px;
+}
+.empty-state h3 { color: var(--text); }
+.empty-state p  { color: var(--text-sec); font-size: 14px; max-width: 240px; }
+
+/* ── Category pills ── */
+.cat-pills { display: flex; gap: 8px; flex-wrap: wrap; }
+.cat-pill {
+  display: flex; align-items: center; gap: 6px;
+  padding: 8px 14px; border-radius: var(--radius-pill);
+  border: 1.5px solid var(--border); background: var(--surface);
+  font-size: 13px; font-weight: 600; color: var(--text-sec);
+  cursor: pointer; transition: all 0.15s;
+}
+.cat-pill:hover { border-color: var(--primary); color: var(--primary); }
+.cat-pill.selected {
+  border-color: var(--primary); background: var(--primary-faint);
+  color: var(--primary);
+}
+
+/* ── Member grid ── */
+.member-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.member-card {
+  display: flex; align-items: center; gap: 10px;
+  padding: 12px; border-radius: var(--radius-btn);
+  border: 1.5px solid var(--border); background: var(--surface);
+  cursor: pointer; transition: all 0.15s; position: relative;
+}
+.member-card:hover { border-color: var(--text-muted); }
+.member-card.selected {
+  border-color: var(--primary); background: var(--primary-faint);
+}
+.member-card .name { font-size: 13px; font-weight: 600; }
+.member-card .check {
+  position: absolute; top: 8px; right: 8px;
+  width: 18px; height: 18px; border-radius: 50%;
+  background: var(--primary); display: flex; align-items: center;
+  justify-content: center; opacity: 0; transition: opacity 0.15s;
+}
+.member-card.selected .check { opacity: 1; }
+.check::after { content:'✓'; color:#fff; font-size:11px; font-weight:700; }
+
+/* ── Paid by row ── */
+.paid-by-row { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px; }
+.paid-by-row::-webkit-scrollbar { display: none; }
+.payer-pill {
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+  cursor: pointer; flex-shrink: 0;
+}
+.payer-pill .avatar { border: 2.5px solid var(--border); transition: border-color 0.15s; }
+.payer-pill.selected .avatar { border-color: var(--primary); }
+.payer-pill .pname { font-size: 11px; font-weight: 600; color: var(--text-sec); max-width: 52px; text-align: center; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.payer-pill.selected .pname { color: var(--primary); }
+
+/* ── Split toggle ── */
+.split-toggle { display: flex; background: #F0EDE8; border-radius: 10px; padding: 3px; gap: 3px; }
+.split-toggle-btn {
+  flex: 1; padding: 8px; border-radius: 8px; border: none;
+  background: transparent; font-family: inherit; font-size: 13px;
+  font-weight: 600; color: var(--text-sec); cursor: pointer; transition: all 0.15s;
+}
+.split-toggle-btn.active {
+  background: var(--surface); color: var(--primary);
+  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+}
+
+/* ── Progress bar for custom split ── */
+.split-bar-wrap { height: 6px; border-radius: 3px; background: var(--border); margin: 12px 0 4px; overflow: hidden; }
+.split-bar { height: 100%; border-radius: 3px; transition: width 0.2s ease; }
+.split-bar.ok     { background: var(--success); }
+.split-bar.partial{ background: var(--primary); }
+.split-bar.over   { background: var(--danger); }
+.split-status { font-size: 12px; font-weight: 600; }
+.split-status.ok     { color: var(--success); }
+.split-status.partial{ color: var(--primary); }
+.split-status.over   { color: var(--danger); }
+
+/* ── Custom amounts list ── */
+.custom-amount-row {
+  display: flex; align-items: center; gap: 10px;
+  padding: 8px 0; border-bottom: 1px solid var(--border);
+}
+.custom-amount-row:last-child { border-bottom: none; }
+.custom-amount-row input { width: 100px; flex-shrink: 0; padding: 8px 12px; text-align: right; font-weight: 600; }
+
+/* ── Expense card ── */
+.expense-card {
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 14px 16px; background: var(--surface);
+  border: 1px solid var(--border); border-radius: var(--radius-card);
+  margin-bottom: 8px; position: relative;
+}
+.expense-card:last-child { margin-bottom: 0; }
+.exp-cat-icon {
+  width: 42px; height: 42px; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px; flex-shrink: 0;
+}
+.exp-body { flex: 1; min-width: 0; }
+.exp-title { font-size: 14px; font-weight: 700; }
+.exp-meta  { font-size: 12px; color: var(--text-sec); margin-top: 2px; }
+.exp-avatars { display: flex; margin-top: 6px; }
+.exp-avatars .avatar-xs { border: 2px solid var(--surface); margin-right: -6px; }
+.exp-right { text-align: right; flex-shrink: 0; }
+.exp-amount { font-size: 16px; font-weight: 700; }
+.exp-added  { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+.edit-btn {
+  position: absolute; top: 10px; right: 10px;
+  width: 28px; height: 28px; border-radius: 6px; border: none;
+  background: var(--primary-faint); color: var(--primary);
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+  font-size: 13px; transition: all 0.15s;
+}
+.edit-btn:hover { background: #FFD4C0; }
+
+/* ── Balance rows ── */
+.balance-row {
+  display: flex; align-items: center; gap: 12px;
+  padding: 14px 0; border-bottom: 1px solid var(--border);
+}
+.balance-row:last-child { border-bottom: none; }
+.balance-info { flex: 1; }
+.balance-name { font-size: 14px; font-weight: 600; }
+.balance-sub  { font-size: 12px; color: var(--text-sec); }
+.balance-amount { font-size: 16px; font-weight: 700; }
+.amount-positive { color: var(--success); }
+.amount-negative { color: var(--danger); }
+.amount-zero     { color: var(--text-muted); }
+
+/* ── Summary cards ── */
+.summary-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 16px 0; }
+.sum-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius-card); padding: 14px; text-align: center;
+}
+.sum-card .s-label { font-size: 11px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 6px; }
+.sum-card .s-value { font-size: 18px; font-weight: 700; }
+
+/* ── Members header strip ── */
+.members-strip { display: flex; gap: 12px; overflow-x: auto; padding: 14px 0; }
+.members-strip::-webkit-scrollbar { display: none; }
+.member-strip-item { display: flex; flex-direction: column; align-items: center; gap: 5px; flex-shrink: 0; }
+.member-strip-item .mname { font-size: 11px; font-weight: 600; color: var(--text-sec); max-width: 52px; text-align: center; }
+
+/* ── Activity log ── */
+.activity-item {
+  display: flex; align-items: flex-start; gap: 10px;
+  padding: 10px 0; border-bottom: 1px solid var(--border);
+}
+.activity-item:last-child { border-bottom: none; }
+.activity-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--primary); flex-shrink: 0; margin-top: 6px;
+}
+.activity-text { font-size: 13px; color: var(--text-sec); }
+.activity-time { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+
+/* ── Settlement plan ── */
+.settlement-row {
+  display: flex; align-items: center; gap: 8px;
+  padding: 12px 0; border-bottom: 1px solid var(--border);
+}
+.settlement-row:last-child { border-bottom: none; }
+.s-from, .s-to { font-size: 14px; font-weight: 600; }
+.s-arrow { color: var(--text-muted); font-size: 16px; }
+.s-amount { margin-left: auto; font-size: 15px; font-weight: 700; color: var(--danger); }
+
+/* ── Home page specific ── */
+.home-page { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; padding: 40px 16px; }
+.home-logo { font-size: 36px; font-weight: 800; color: var(--primary); margin-bottom: 8px; }
+.home-sub { font-size: 15px; color: var(--text-sec); text-align: center; margin-bottom: 40px; max-width: 320px; }
+.home-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; width: 100%; max-width: 420px; margin-bottom: 24px; }
+.home-card {
+  background: var(--surface); border: 1.5px solid var(--border);
+  border-radius: var(--radius-card); padding: 24px 16px; text-align: center;
+  cursor: pointer; transition: all 0.15s;
+}
+.home-card:hover { border-color: var(--primary); background: var(--primary-faint); }
+.home-card.selected { border-color: var(--primary); background: var(--primary-faint); }
+.home-card .hc-icon { font-size: 32px; margin-bottom: 8px; }
+.home-card .hc-title { font-size: 14px; font-weight: 700; }
+.home-card .hc-sub   { font-size: 12px; color: var(--text-sec); margin-top: 3px; }
+.home-form { width: 100%; max-width: 420px; background: var(--surface); border-radius: var(--radius-card); border: 1px solid var(--border); padding: 24px; }
+.member-pills { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+.member-pill {
+  display: flex; align-items: center; gap: 6px;
+  background: var(--primary-faint); color: var(--primary);
+  padding: 5px 10px 5px 8px; border-radius: var(--radius-pill);
+  font-size: 13px; font-weight: 600;
+}
+.member-pill .remove {
+  width: 16px; height: 16px; border-radius: 50%;
+  background: #FFD0BC; color: var(--primary);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10px; cursor: pointer; border: none; font-weight: 700;
+  transition: background 0.15s;
+}
+.member-pill .remove:hover { background: #FFB8A0; }
+.add-member-row { display: flex; gap: 8px; }
+.add-member-row input { flex: 1; }
+
+/* ── Warning banner ── */
+.warning-banner {
+  background: var(--warning-light); border: 1px solid #F0C878;
+  border-radius: var(--radius-btn); padding: 10px 14px;
+  font-size: 13px; color: #9A6800; margin-bottom: 16px;
+  display: flex; align-items: center; gap: 8px;
+}
+
+/* ── Even split preview ── */
+.even-preview {
+  background: var(--success-light); border-radius: var(--radius-btn);
+  padding: 10px 14px; margin-top: 8px;
+  font-size: 13px; font-weight: 600; color: var(--success);
+  display: flex; align-items: center; gap: 6px;
+}
+
+/* ── Category bar (summary) ── */
+.cat-bar-wrap { margin: 8px 0; }
+.cat-bar-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+.cat-bar-label { font-size: 13px; width: 80px; flex-shrink: 0; }
+.cat-bar-track { flex: 1; height: 10px; background: var(--border); border-radius: 5px; overflow: hidden; }
+.cat-bar-fill  { height: 100%; border-radius: 5px; transition: width 0.4s ease; }
+.cat-bar-val   { font-size: 13px; font-weight: 600; width: 64px; text-align: right; flex-shrink: 0; }
+
+/* ── Misc ── */
+.text-center { text-align: center; }
+.text-right  { text-align: right; }
+.mt-8  { margin-top: 8px; }
+.mt-16 { margin-top: 16px; }
+.mt-24 { margin-top: 24px; }
+.mb-8  { margin-bottom: 8px; }
+.mb-16 { margin-bottom: 16px; }
+.flex  { display: flex; }
+.flex-center { display: flex; align-items: center; }
+.flex-between { display: flex; align-items: center; justify-content: space-between; }
+.gap-8  { gap: 8px; }
+.gap-12 { gap: 12px; }
+.hidden { display: none !important; }
+.w-full { width: 100%; }
+.link-btn { background: none; border: none; color: var(--primary); font-size: 13px; font-weight: 600; cursor: pointer; padding: 0; font-family: inherit; }
+.link-btn-muted { background: none; border: none; color: var(--text-muted); font-size: 13px; font-weight: 600; cursor: pointer; padding: 0; font-family: inherit; }
+.link-btn-muted:hover { color: var(--danger); }
+
+/* Dashboard trip header */
+.trip-header { padding: 20px 16px 0; }
+.trip-name { font-size: 22px; font-weight: 800; }
+.trip-dest { font-size: 14px; color: var(--text-sec); margin-top: 2px; }
+.trip-dates-badge { display: inline-flex; align-items: center; gap: 4px; background: #F0EDE8; border-radius: var(--radius-pill); padding: 4px 12px; font-size: 12px; font-weight: 600; color: var(--text-sec); margin-top: 8px; }
+
+/* Remind btn small */
+.btn-remind { background: var(--warning-light); color: #9A6800; border: none; padding: 6px 12px; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer; font-family: inherit; transition: all 0.15s; }
+.btn-remind:hover { background: #FAEAC0; }
+.btn-settle { background: var(--success-light); color: var(--success); border: none; padding: 6px 12px; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer; font-family: inherit; transition: all 0.15s; }
+.btn-settle:hover { background: #C8EEDF; }
+
+/* Net balance big card */
+.net-balance-card {
+  border-radius: var(--radius-card); padding: 24px; text-align: center; margin-bottom: 24px;
+}
+.net-balance-card .nb-label { font-size: 13px; font-weight: 600; margin-bottom: 8px; opacity: 0.75; }
+.net-balance-card .nb-amount { font-size: 36px; font-weight: 800; }
+.net-balance-card .nb-sub { font-size: 13px; margin-top: 6px; opacity: 0.7; }
+</style>
+</head>
+<body>
+<div id="app"></div>
+<div id="toast-container"></div>
+<div id="modal-overlay" class="hidden"></div>
+<script>
+// db.js — localStorage-based database (simulates MySQL for frontend demo)
+const DB = {
+  // ── Trips ──────────────────────────────────────
+  createTrip(data) {
+    const trips = this.getAll('trips');
+    const code  = this.genCode();
+    const trip  = { trip_id: Date.now(), trip_code: code, created_at: new Date().toISOString(), ...data };
+    trips.push(trip);
+    this.save('trips', trips);
+    return trip;
+  },
+  getTripByCode(code) {
+    return this.getAll('trips').find(t => t.trip_code === code.toUpperCase()) || null;
+  },
+
+  // ── Members ────────────────────────────────────
+  addMember(tripId, name) {
+    const members = this.getAll('members');
+    const existing = members.filter(m => m.trip_id === tripId);
+    const token = this.genToken();
+    const member = {
+      member_id: Date.now() + Math.random(),
+      trip_id: tripId,
+      member_name: name,
+      member_token: token,
+      color_index: existing.length % 10,
+      joined_at: new Date().toISOString()
+    };
+    members.push(member);
+    this.save('members', members);
+    return member;
+  },
+  getMembersByTrip(tripId) {
+    return this.getAll('members').filter(m => m.trip_id === tripId);
+  },
+  getMemberByToken(token) {
+    return this.getAll('members').find(m => m.member_token === token) || null;
+  },
+  getMemberById(id) {
+    return this.getAll('members').find(m => m.member_id === id) || null;
+  },
+
+  // ── Expenses ───────────────────────────────────
+  addExpense(data) {
+    const expenses = this.getAll('expenses');
+    const expense = {
+      expense_id: Date.now(),
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString(),
+      ...data
+    };
+    expenses.push(expense);
+    this.save('expenses', expenses);
+    // save splits
+    if (data.splits) {
+      const splits = this.getAll('expense_splits');
+      data.splits.forEach(s => {
+        splits.push({ split_id: Date.now() + Math.random(), expense_id: expense.expense_id, ...s });
+      });
+      this.save('expense_splits', splits);
+    }
+    this.logActivity(data.trip_id, data.added_by, 'add', `Added "${data.title}" — ₹${formatAmount(data.total_amount)}`);
+    return expense;
+  },
+  updateExpense(expenseId, data, memberToken) {
+    const expenses = this.getAll('expenses');
+    const idx = expenses.findIndex(e => e.expense_id === expenseId);
+    if (idx === -1) return null;
+    const exp = expenses[idx];
+    const member = this.getMemberByToken(memberToken);
+    if (!member || exp.added_by !== member.member_id) return { error: 'Unauthorized' };
+    expenses[idx] = { ...exp, ...data, updated_at: new Date().toISOString() };
+    this.save('expenses', expenses);
+    // replace splits
+    let splits = this.getAll('expense_splits').filter(s => s.expense_id !== expenseId);
+    if (data.splits) {
+      data.splits.forEach(s => {
+        splits.push({ split_id: Date.now() + Math.random(), expense_id: expenseId, ...s });
+      });
+    }
+    this.save('expense_splits', splits);
+    this.logActivity(exp.trip_id, member.member_id, 'edit', `Edited "${data.title || exp.title}" expense`);
+    return expenses[idx];
+  },
+  deleteExpense(expenseId, memberToken) {
+    const expenses = this.getAll('expenses');
+    const exp = expenses.find(e => e.expense_id === expenseId);
+    if (!exp) return null;
+    const member = this.getMemberByToken(memberToken);
+    if (!member || exp.added_by !== member.member_id) return { error: 'Unauthorized' };
+    this.save('expenses', expenses.filter(e => e.expense_id !== expenseId));
+    this.save('expense_splits', this.getAll('expense_splits').filter(s => s.expense_id !== expenseId));
+    this.logActivity(exp.trip_id, member.member_id, 'delete', `Deleted "${exp.title}" expense`);
+    return true;
+  },
+  getExpensesByTrip(tripId) {
+    return this.getAll('expenses')
+      .filter(e => e.trip_id === tripId)
+      .sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+  },
+  getSplitsByExpense(expenseId) {
+    return this.getAll('expense_splits').filter(s => s.expense_id === expenseId);
+  },
+
+  // ── Balances ───────────────────────────────────
+  getBalances(tripId) {
+    const members  = this.getMembersByTrip(tripId);
+    const expenses = this.getExpensesByTrip(tripId);
+    const allSplits = this.getAll('expense_splits');
+
+    return members.map(m => {
+      const totalPaid = expenses
+        .filter(e => e.paid_by === m.member_id)
+        .reduce((sum, e) => sum + parseFloat(e.total_amount), 0);
+      const totalOwed = allSplits
+        .filter(s => expenses.some(e => e.expense_id === s.expense_id) && s.member_id === m.member_id)
+        .reduce((sum, s) => sum + parseFloat(s.amount_owed), 0);
+      return {
+        member_id: m.member_id,
+        member_name: m.member_name,
+        color_index: m.color_index,
+        total_paid: totalPaid,
+        total_owed: totalOwed,
+        net_balance: Math.round((totalPaid - totalOwed) * 100) / 100
+      };
+    });
+  },
+
+  // ── Settlements ────────────────────────────────
+  calculateSettlements(tripId) {
+    let balances = this.getBalances(tripId).map(b => ({ ...b }));
+    let creditors = balances.filter(b => b.net_balance > 0.01).sort((a,b) => b.net_balance - a.net_balance);
+    let debtors   = balances.filter(b => b.net_balance < -0.01).sort((a,b) => a.net_balance - b.net_balance);
+    let transactions = [];
+
+    while (debtors.length && creditors.length) {
+      let d = debtors[0], c = creditors[0];
+      let amount = Math.min(Math.abs(d.net_balance), c.net_balance);
+      amount = Math.round(amount * 100) / 100;
+      transactions.push({ payer: d.member_name, payer_id: d.member_id, receiver: c.member_name, receiver_id: c.member_id, amount });
+      d.net_balance = Math.round((d.net_balance + amount) * 100) / 100;
+      c.net_balance = Math.round((c.net_balance - amount) * 100) / 100;
+      if (Math.abs(d.net_balance) < 0.01) debtors.shift();
+      if (Math.abs(c.net_balance) < 0.01) creditors.shift();
+    }
+    return transactions;
+  },
+
+  // ── Activity Log ───────────────────────────────
+  logActivity(tripId, memberId, action, description) {
+    const logs = this.getAll('activity_log');
+    logs.unshift({ log_id: Date.now(), trip_id: tripId, member_id: memberId, action, description, created_at: new Date().toISOString() });
+    this.save('activity_log', logs.slice(0, 50));
+  },
+  getActivity(tripId) {
+    return this.getAll('activity_log').filter(l => l.trip_id === tripId).slice(0, 20);
+  },
+
+  // ── Helpers ────────────────────────────────────
+  genCode() {
+    const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+    let code = '';
+    for (let i = 0; i < 6; i++) code += chars[Math.floor(Math.random() * chars.length)];
+    return code;
+  },
+  genToken() {
+    return Array.from(crypto.getRandomValues(new Uint8Array(32))).map(b => b.toString(16).padStart(2,'0')).join('');
+  },
+  getAll(key)    { try { return JSON.parse(localStorage.getItem('vs_' + key) || '[]'); } catch { return []; } },
+  save(key, val) { localStorage.setItem('vs_' + key, JSON.stringify(val)); }
+};
+
+// Categories
+const CATEGORIES = [
+  { id: 1, name: 'Food',     emoji: '🍽️', bg: '#FFF0E0', color: '#C05A00' },
+  { id: 2, name: 'Hotel',    emoji: '🏨', bg: '#E0F0FF', color: '#005AB0' },
+  { id: 3, name: 'Travel',   emoji: '🚗', bg: '#E0F5EC', color: '#006B3D' },
+  { id: 4, name: 'Shopping', emoji: '🛍️', bg: '#F5E0FF', color: '#7A00B0' },
+  { id: 5, name: 'Other',    emoji: '📦', bg: '#F0EDE8', color: '#5A5550' }
+];
+
+// Member colors
+const MEMBER_COLORS = [
+  { bg: '#FFE4D6', text: '#C04A00' },
+  { bg: '#D6F0FF', text: '#006B99' },
+  { bg: '#D6FFE8', text: '#007A3D' },
+  { bg: '#F0D6FF', text: '#6B00A8' },
+  { bg: '#FFD6D6', text: '#A80000' },
+  { bg: '#FFF3D6', text: '#A86B00' },
+  { bg: '#D6FFFA', text: '#007A6B' },
+  { bg: '#FFD6F5', text: '#A8006B' },
+  { bg: '#E8FFD6', text: '#4A7A00' },
+  { bg: '#D6D6FF', text: '#00006B' }
+];
+
+// utils.js
+
+function formatAmount(n) {
+  return Number(n).toLocaleString('en-IN', { minimumFractionDigits: 0, maximumFractionDigits: 2 });
+}
+
+function formatDate(str) {
+  if (!str) return '';
+  const d = new Date(str);
+  return d.toLocaleDateString('en-IN', { day: '2-digit', month: 'short' });
+}
+
+function timeAgo(str) {
+  const diff = Date.now() - new Date(str).getTime();
+  const min = Math.floor(diff / 60000);
+  if (min < 1)  return 'Just now';
+  if (min < 60) return `${min}m ago`;
+  const hr = Math.floor(min / 60);
+  if (hr < 24)  return `${hr}h ago`;
+  return formatDate(str);
+}
+
+function avatar(name, colorIdx, sizeClass = '') {
+  const c = MEMBER_COLORS[colorIdx % MEMBER_COLORS.length];
+  const letter = (name || '?')[0].toUpperCase();
+  return `<div class="avatar ${sizeClass}" style="background:${c.bg};color:${c.text}">${letter}</div>`;
+}
+
+function showToast(msg, type = '') {
+  const t = document.createElement('div');
+  t.className = 'toast' + (type ? ' toast-' + type : '');
+  t.textContent = msg;
+  document.getElementById('toast-container').appendChild(t);
+  setTimeout(() => {
+    t.classList.add('hide');
+    setTimeout(() => t.remove(), 300);
+  }, 2500);
+}
+
+function showModal(title, body, confirmLabel, onConfirm, danger = false) {
+  const overlay = document.getElementById('modal-overlay');
+  overlay.innerHTML = `
+    <div class="modal">
+      <h3>${title}</h3>
+      <p>${body}</p>
+      <div class="modal-actions">
+        <button class="btn btn-ghost" id="modal-cancel">Cancel</button>
+        <button class="btn ${danger ? 'btn-danger' : 'btn-primary'}" id="modal-confirm">${confirmLabel}</button>
+      </div>
+    </div>`;
+  overlay.classList.remove('hidden');
+  overlay.querySelector('#modal-cancel').onclick  = () => overlay.classList.add('hidden');
+  overlay.querySelector('#modal-confirm').onclick = () => { overlay.classList.add('hidden'); onConfirm(); };
+}
+
+function copyToClipboard(text, msg = 'Copied!') {
+  navigator.clipboard.writeText(text).then(() => showToast(msg, 'success')).catch(() => {
+    const ta = document.createElement('textarea');
+    ta.value = text; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); ta.remove();
+    showToast(msg, 'success');
+  });
+}
+
+// Session: store current member token in sessionStorage per trip
+const Session = {
+  setMember(tripCode, token) { sessionStorage.setItem('vs_token_' + tripCode, token); },
+  getToken(tripCode)         { return sessionStorage.getItem('vs_token_' + tripCode); },
+  getMember(tripCode)        { const t = this.getToken(tripCode); return t ? DB.getMemberByToken(t) : null; }
+};
+
+// router.js
+const Router = {
+  routes: {},
+  register(path, handler) { this.routes[path] = handler; },
+  navigate(path) { window.location.hash = path; },
+  current() { return window.location.hash.slice(1) || '/'; },
+  init() {
+    window.addEventListener('hashchange', () => this.resolve());
+    this.resolve();
+  },
+  resolve() {
+    const hash = this.current();
+    // match exact or pattern
+    for (const [pattern, handler] of Object.entries(this.routes)) {
+      const params = matchRoute(pattern, hash);
+      if (params !== null) { handler(params); return; }
+    }
+    // fallback home
+    if (this.routes['/']) this.routes['/']({});
+  }
+};
+
+function matchRoute(pattern, path) {
+  const pp = pattern.split('/');
+  const hp = path.split('/');
+  if (pp.length !== hp.length) return null;
+  const params = {};
+  for (let i = 0; i < pp.length; i++) {
+    if (pp[i].startsWith(':')) params[pp[i].slice(1)] = decodeURIComponent(hp[i]);
+    else if (pp[i] !== hp[i]) return null;
+  }
+  return params;
+}
+
+// pages/home.js
+function renderHome() {
+  const app = document.getElementById('app');
+  app.innerHTML = `
+  <div class="home-page">
+    <div class="home-logo">✈️ VacationSplit</div>
+    <p class="home-sub">Split trip expenses with your group.<br>No signups. No confusion.</p>
+
+    <div class="home-cards">
+      <div class="home-card" id="hc-create" onclick="selectHomeCard('create')">
+        <div class="hc-icon">🗺️</div>
+        <div class="hc-title">Create a Trip</div>
+        <div class="hc-sub">Start a new group</div>
+      </div>
+      <div class="home-card" id="hc-join" onclick="selectHomeCard('join')">
+        <div class="hc-icon">🔑</div>
+        <div class="hc-title">Join with Code</div>
+        <div class="hc-sub">Enter trip code</div>
+      </div>
+    </div>
+
+    <div class="home-form hidden" id="form-create">
+      <h3 style="margin-bottom:16px">Create Your Trip</h3>
+      <div class="input-group">
+        <label>Trip name</label>
+        <input type="text" id="trip-name" placeholder="e.g. Goa Trip 2025" maxlength="60"/>
+      </div>
+      <div class="input-group">
+        <label>Destination</label>
+        <input type="text" id="trip-dest" placeholder="e.g. Goa, India" maxlength="80"/>
+      </div>
+      <div class="input-row">
+        <div class="input-group" style="margin-bottom:0">
+          <label>Start date</label>
+          <input type="date" id="trip-start"/>
+        </div>
+        <div class="input-group" style="margin-bottom:0">
+          <label>End date</label>
+          <input type="date" id="trip-end"/>
+        </div>
+      </div>
+      <div style="margin-top:16px" class="input-group">
+        <label>Your name</label>
+        <input type="text" id="creator-name" placeholder="What do your friends call you?" maxlength="30"/>
+      </div>
+
+      <div style="margin-top:4px">
+        <label class="label" style="display:block;margin-bottom:8px">Add members <span class="tiny">(min 1 more, max 19)</span></label>
+        <div class="add-member-row">
+          <input type="text" id="member-input" placeholder="Friend's name" maxlength="30" onkeydown="if(event.key==='Enter')addMemberPill()"/>
+          <button class="btn btn-outline btn-sm" onclick="addMemberPill()">Add</button>
+        </div>
+        <div class="member-pills" id="member-pills" style="margin-top:10px"></div>
+        <div id="members-error" class="field-error hidden">Add at least 1 more member</div>
+      </div>
+
+      <button class="btn btn-primary btn-full" style="margin-top:24px" onclick="submitCreate()">Create Trip 🚀</button>
+    </div>
+
+    <div class="home-form hidden" id="form-join">
+      <h3 style="margin-bottom:16px">Join a Trip</h3>
+      <div class="input-group">
+        <label>Trip code</label>
+        <input type="text" id="join-code" placeholder="e.g. GOA25X" maxlength="6" oninput="this.value=this.value.toUpperCase();lookupTrip()"/>
+      </div>
+      <div id="join-members-wrap" class="hidden">
+        <div class="input-group">
+          <label>Select your name</label>
+          <select id="join-member-select"></select>
+        </div>
+      </div>
+      <div id="join-error" class="field-error hidden">Trip not found. Check the code.</div>
+      <button class="btn btn-primary btn-full" style="margin-top:16px" onclick="submitJoin()">Join Trip</button>
+    </div>
+  </div>`;
+
+  window._members = [];
+}
+
+function selectHomeCard(type) {
+  document.getElementById('hc-create').classList.toggle('selected', type === 'create');
+  document.getElementById('hc-join').classList.toggle('selected', type === 'join');
+  document.getElementById('form-create').classList.toggle('hidden', type !== 'create');
+  document.getElementById('form-join').classList.toggle('hidden', type !== 'join');
+}
+
+function addMemberPill() {
+  const inp = document.getElementById('member-input');
+  const name = inp.value.trim();
+  if (!name || window._members.includes(name)) { inp.focus(); return; }
+  if (window._members.length >= 19) { showToast('Max 20 members allowed', 'error'); return; }
+  window._members.push(name);
+  inp.value = '';
+  renderPills();
+  inp.focus();
+}
+
+function removeMember(name) {
+  window._members = window._members.filter(m => m !== name);
+  renderPills();
+}
+
+function renderPills() {
+  const container = document.getElementById('member-pills');
+  container.innerHTML = window._members.map(m => `
+    <div class="member-pill">
+      ${m}
+      <button class="remove" onclick="removeMember('${m.replace(/'/g,"\\'")}')">✕</button>
+    </div>`).join('');
+}
+
+function submitCreate() {
+  const name  = document.getElementById('trip-name').value.trim();
+  const dest  = document.getElementById('trip-dest').value.trim();
+  const start = document.getElementById('trip-start').value;
+  const end   = document.getElementById('trip-end').value;
+  const creator = document.getElementById('creator-name').value.trim();
+
+  if (!name || !creator) { showToast('Trip name and your name are required', 'error'); return; }
+  if (window._members.length < 1) {
+    document.getElementById('members-error').classList.remove('hidden'); return;
+  }
+  document.getElementById('members-error').classList.add('hidden');
+
+  const trip = DB.createTrip({ trip_name: name, destination: dest, start_date: start, end_date: end });
+  const creatorMember = DB.addMember(trip.trip_id, creator);
+  window._members.forEach(m => DB.addMember(trip.trip_id, m));
+
+  Session.setMember(trip.trip_code, creatorMember.member_token);
+  DB.logActivity(trip.trip_id, creatorMember.member_id, 'create', `Trip "${name}" created by ${creator}`);
+  showToast('Trip created! 🎉', 'success');
+  Router.navigate('/trip/' + trip.trip_code + '/dashboard');
+}
+
+function lookupTrip() {
+  const code = document.getElementById('join-code').value.trim();
+  const err  = document.getElementById('join-error');
+  const wrap = document.getElementById('join-members-wrap');
+  if (code.length < 6) { wrap.classList.add('hidden'); err.classList.add('hidden'); return; }
+
+  const trip = DB.getTripByCode(code);
+  if (!trip) { err.classList.remove('hidden'); wrap.classList.add('hidden'); return; }
+  err.classList.add('hidden');
+
+  const members = DB.getMembersByTrip(trip.trip_id);
+  const sel = document.getElementById('join-member-select');
+  sel.innerHTML = '<option value="">-- Select your name --</option>' +
+    members.map(m => `<option value="${m.member_token}">${m.member_name}</option>`).join('');
+  wrap.classList.remove('hidden');
+}
+
+function submitJoin() {
+  const code  = document.getElementById('join-code').value.trim();
+  const token = document.getElementById('join-member-select')?.value;
+  if (!token) { showToast('Select your name', 'error'); return; }
+  const trip = DB.getTripByCode(code);
+  if (!trip) { showToast('Trip not found', 'error'); return; }
+  Session.setMember(trip.trip_code, token);
+  showToast('Welcome to the trip! 🏖️', 'success');
+  Router.navigate('/trip/' + trip.trip_code + '/dashboard');
+}
+
+// pages/dashboard.js
+function renderDashboard(tripCode) {
+  const trip = DB.getTripByCode(tripCode);
+  if (!trip) { Router.navigate('/'); return; }
+
+  const me       = Session.getMember(tripCode);
+  const members  = DB.getMembersByTrip(trip.trip_id);
+  const expenses = DB.getExpensesByTrip(trip.trip_id);
+  const balances = DB.getBalances(trip.trip_id);
+  const activity = DB.getActivity(trip.trip_id);
+
+  const myBalance = balances.find(b => b.member_id === me?.member_id);
+  const totalSpent = expenses.reduce((s, e) => s + parseFloat(e.total_amount), 0);
+  const myShare = myBalance ? myBalance.total_owed : 0;
+  const myNet   = myBalance ? myBalance.net_balance : 0;
+
+  const app = document.getElementById('app');
+  app.innerHTML = `
+  ${renderBottomNav(tripCode, 'dashboard')}
+
+  <div class="top-bar">
+    <div class="top-bar-side"></div>
+    <div class="top-bar-title">Dashboard</div>
+    <span class="trip-code-pill" onclick="copyToClipboard('${tripCode}','Code copied!')">${tripCode} 📋</span>
+  </div>
+
+  <div class="page-inner" style="padding-top:16px">
+    <div class="trip-header" style="padding:0 0 0 0">
+      <div class="trip-name">${trip.trip_name}</div>
+      <div class="trip-dest">📍 ${trip.destination || 'Trip'}</div>
+      ${trip.start_date ? `<div class="trip-dates-badge">📅 ${formatDate(trip.start_date)} – ${formatDate(trip.end_date)}</div>` : ''}
+    </div>
+
+    <div class="members-strip">
+      ${members.map(m => `
+        <div class="member-strip-item">
+          ${avatar(m.member_name, m.color_index)}
+          <div class="mname">${m.member_name.split(' ')[0]}</div>
+        </div>`).join('')}
+    </div>
+
+    <div class="summary-cards">
+      <div class="sum-card">
+        <div class="s-label">Total Spent</div>
+        <div class="s-value">₹${formatAmount(totalSpent)}</div>
+      </div>
+      <div class="sum-card">
+        <div class="s-label">Your Share</div>
+        <div class="s-value">₹${formatAmount(myShare)}</div>
+      </div>
+      <div class="sum-card">
+        <div class="s-label">Balance</div>
+        <div class="s-value ${myNet > 0 ? 'amount-positive' : myNet < 0 ? 'amount-negative' : 'amount-zero'}">
+          ${myNet >= 0 ? '+' : ''}₹${formatAmount(Math.abs(myNet))}
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="section-heading">
+      <h3>Expenses</h3>
+      <button class="btn btn-primary btn-sm" onclick="Router.navigate('/trip/${tripCode}/add-expense')">+ Add</button>
+    </div>
+
+    <div id="expenses-list">
+      ${expenses.length === 0 ? `
+        <div class="empty-state">
+          <div class="empty-icon">🧾</div>
+          <h3>No expenses yet</h3>
+          <p>Add your first expense and start tracking!</p>
+          <button class="btn btn-primary" onclick="Router.navigate('/trip/${tripCode}/add-expense')">+ Add Expense</button>
+        </div>` :
+        expenses.map(e => renderExpenseCard(e, me, members)).join('')
+      }
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="section-heading"><h3>Balances</h3></div>
+    <div class="card" style="margin-bottom:16px">
+      ${balances.map(b => {
+        const isMe = me && b.member_id === me.member_id;
+        const rel  = isMe ? b.net_balance : (me ? getRelativeBalance(me.member_id, b.member_id, trip.trip_id) : 0);
+        return `
+        <div class="balance-row">
+          <div class="flex-center gap-8">
+            ${avatar(b.member_name, b.color_index, 'avatar-sm')}
+            <div class="balance-info">
+              <div class="balance-name">${b.member_name}${isMe ? ' <span class="badge badge-primary" style="font-size:10px">You</span>' : ''}</div>
+              <div class="balance-sub">Paid ₹${formatAmount(b.total_paid)}</div>
+            </div>
+          </div>
+          <div class="text-right">
+            <div class="balance-amount ${b.net_balance > 0 ? 'amount-positive' : b.net_balance < 0 ? 'amount-negative' : 'amount-zero'}">
+              ${b.net_balance >= 0 ? '+' : ''}₹${formatAmount(Math.abs(b.net_balance))}
+            </div>
+          </div>
+        </div>`}).join('')}
+    </div>
+
+    ${activity.length > 0 ? `
+    <div class="section-heading"><h3>Recent Activity</h3></div>
+    <div class="card">
+      ${activity.map(a => {
+        const m = DB.getMemberById(a.member_id);
+        return `<div class="activity-item">
+          <div class="activity-dot"></div>
+          <div>
+            <div class="activity-text">${a.description}</div>
+            <div class="activity-time">${timeAgo(a.created_at)}</div>
+          </div>
+        </div>`;
+      }).join('')}
+    </div>` : ''}
+
+    <div style="height:32px"></div>
+  </div>`;
+}
+
+function renderExpenseCard(exp, me, members) {
+  const cat  = CATEGORIES.find(c => c.id === exp.category_id) || CATEGORIES[4];
+  const paidByMember = members.find(m => m.member_id === exp.paid_by);
+  const addedByMember = members.find(m => m.member_id === exp.added_by);
+  const splits = DB.getSplitsByExpense(exp.expense_id);
+  const splitMembers = splits.map(s => members.find(m => m.member_id === s.member_id)).filter(Boolean);
+  const canEdit = me && exp.added_by === me.member_id;
+  const tripCode = DB.getTripByCode(DB.getAll('trips').find(t => t.trip_id === exp.trip_id)?.trip_code)?.trip_code || '';
+
+  return `<div class="expense-card">
+    <div class="exp-cat-icon" style="background:${cat.bg}">${cat.emoji}</div>
+    <div class="exp-body">
+      <div class="exp-title">${exp.title}</div>
+      <div class="exp-meta">Paid by ${paidByMember?.member_name || '?'} · ${cat.name}</div>
+      <div class="exp-avatars">
+        ${splitMembers.slice(0,5).map(m => avatar(m.member_name, m.color_index, 'avatar-xs')).join('')}
+        ${splitMembers.length > 5 ? `<div class="avatar avatar-xs" style="background:#F0EDE8;color:#6B6B6B">+${splitMembers.length-5}</div>` : ''}
+      </div>
+    </div>
+    <div class="exp-right">
+      <div class="exp-amount">₹${formatAmount(exp.total_amount)}</div>
+      <div class="exp-added">${timeAgo(exp.created_at)}</div>
+    </div>
+    ${canEdit ? `<button class="edit-btn" onclick="event.stopPropagation();Router.navigate('/trip/${getCurrentTripCode()}/edit-expense/${exp.expense_id}')">✏️</button>` : ''}
+  </div>`;
+}
+
+function getRelativeBalance(myId, theirId, tripId) {
+  // simplified relative — just show net for now
+  return 0;
+}
+
+function getCurrentTripCode() {
+  const h = window.location.hash.slice(1);
+  const m = h.match(/\/trip\/([^/]+)/);
+  return m ? m[1] : '';
+}
+
+// pages/add-expense.js
+let _expState = {};
+
+function renderAddExpense(tripCode, expenseId = null) {
+  const trip = DB.getTripByCode(tripCode);
+  if (!trip) { Router.navigate('/'); return; }
+  const me      = Session.getMember(tripCode);
+  const members = DB.getMembersByTrip(trip.trip_id);
+
+  let editing = null;
+  if (expenseId) {
+    const allExp = DB.getExpensesByTrip(trip.trip_id);
+    editing = allExp.find(e => e.expense_id == expenseId);
+    if (!editing || !me || editing.added_by !== me.member_id) {
+      showToast('You can only edit your own expenses', 'error');
+      Router.navigate('/trip/' + tripCode + '/dashboard'); return;
+    }
+  }
+
+  _expState = {
+    tripCode, trip, me, members,
+    selectedCategory: editing?.category_id || null,
+    selectedPayer: editing?.paid_by || me?.member_id || null,
+    selectedSplit: editing ? DB.getSplitsByExpense(editing.expense_id).map(s => s.member_id) : (me ? [me.member_id] : []),
+    splitType: editing?.split_type || 'even',
+    editing
+  };
+
+  const app = document.getElementById('app');
+  app.innerHTML = `
+  <div class="top-bar">
+    <button class="back-btn" onclick="Router.navigate('/trip/${tripCode}/dashboard')">←</button>
+    <div class="top-bar-title">${editing ? 'Edit Expense' : 'Add Expense'}</div>
+    <div class="top-bar-side"></div>
+  </div>
+
+  <div class="page-inner-sm" style="padding-top:20px">
+    ${editing ? `<div class="warning-banner">⚠️ Editing this will update everyone's balances</div>` : ''}
+
+    <div class="input-group">
+      <label>What was it for?</label>
+      <input type="text" id="exp-title" placeholder="e.g. Beach dinner, Hotel booking" maxlength="100"
+        value="${editing?.title || ''}" oninput="validateExpForm()"/>
+    </div>
+
+    <div class="input-group">
+      <label>Category</label>
+      <div class="cat-pills" id="cat-pills">
+        ${CATEGORIES.map(c => `
+          <div class="cat-pill ${_expState.selectedCategory === c.id ? 'selected' : ''}"
+            onclick="selectCat(${c.id})" id="cat-${c.id}">
+            ${c.emoji} ${c.name}
+          </div>`).join('')}
+      </div>
+    </div>
+
+    <div class="input-group">
+      <label>Total amount</label>
+      <div class="input-prefix-wrap">
+        <span class="prefix">₹</span>
+        <input type="number" id="exp-amount" placeholder="0" min="1" step="0.01"
+          value="${editing?.total_amount || ''}" oninput="validateExpForm();updateEvenPreview()"/>
+      </div>
+    </div>
+
+    <div class="input-group">
+      <label>Paid by</label>
+      <div class="paid-by-row" id="paid-by-row">
+        ${members.map(m => `
+          <div class="payer-pill ${_expState.selectedPayer === m.member_id ? 'selected' : ''}"
+            id="payer-${m.member_id}" onclick="selectPayer('${m.member_id}')">
+            ${avatar(m.member_name, m.color_index)}
+            <div class="pname">${m.member_name.split(' ')[0]}</div>
+          </div>`).join('')}
+      </div>
+    </div>
+
+    <div class="input-group">
+      <div class="flex-between mb-8">
+        <label style="margin:0">Who is splitting this?</label>
+        <div style="display:flex;gap:8px">
+          <button class="link-btn" onclick="selectAllMembers()">All</button>
+          <button class="link-btn-muted" onclick="clearMembers()">Clear</button>
+        </div>
+      </div>
+      <div class="member-grid" id="split-grid">
+        ${members.map(m => `
+          <div class="member-card ${_expState.selectedSplit.includes(m.member_id) ? 'selected' : ''}"
+            id="mc-${m.member_id}" onclick="toggleSplitMember('${m.member_id}')">
+            ${avatar(m.member_name, m.color_index, 'avatar-sm')}
+            <div class="name">${m.member_name}</div>
+            <div class="check"></div>
+          </div>`).join('')}
+      </div>
+    </div>
+
+    <div class="input-group">
+      <label>Split type</label>
+      <div class="split-toggle">
+        <button class="split-toggle-btn ${_expState.splitType === 'even' ? 'active' : ''}"
+          id="st-even" onclick="setSplitType('even')">⚖️ Even Split</button>
+        <button class="split-toggle-btn ${_expState.splitType === 'custom' ? 'active' : ''}"
+          id="st-custom" onclick="setSplitType('custom')">✏️ Custom Split</button>
+      </div>
+
+      <div id="even-preview" class="${_expState.splitType === 'even' ? '' : 'hidden'}">
+        <div class="even-preview" id="even-preview-text">Select members and enter amount</div>
+      </div>
+
+      <div id="custom-split-section" class="${_expState.splitType === 'custom' ? '' : 'hidden'}">
+        <div id="custom-amounts"></div>
+        <div class="split-bar-wrap"><div class="split-bar partial" id="split-bar" style="width:0%"></div></div>
+        <div class="flex-between">
+          <div class="split-status partial" id="split-status-text">₹0 of ₹0 assigned</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="input-group">
+      <label>Note <span class="tiny">(optional)</span></label>
+      <input type="text" id="exp-note" placeholder="Add a note..." value="${editing?.note || ''}"/>
+    </div>
+
+    <button class="btn btn-primary btn-full" id="save-btn" disabled onclick="saveExpense()">
+      ${editing ? 'Save Changes' : 'Save Expense'}
+    </button>
+
+    ${editing ? `
+    <div style="text-align:center;margin-top:16px">
+      <button class="link-btn-muted" onclick="deleteExpenseConfirm()">🗑️ Delete this expense</button>
+    </div>` : ''}
+
+    <div style="height:32px"></div>
+  </div>`;
+
+  updateEvenPreview();
+  if (_expState.splitType === 'custom') renderCustomAmounts();
+  validateExpForm();
+}
+
+function selectCat(id) {
+  _expState.selectedCategory = id;
+  document.querySelectorAll('.cat-pill').forEach(p => p.classList.remove('selected'));
+  document.getElementById('cat-' + id)?.classList.add('selected');
+  validateExpForm();
+}
+
+function selectPayer(idStr) {
+  _expState.selectedPayer = parseFloat(idStr) || idStr;
+  document.querySelectorAll('.payer-pill').forEach(p => p.classList.remove('selected'));
+  document.getElementById('payer-' + idStr)?.classList.add('selected');
+  validateExpForm();
+}
+
+function toggleSplitMember(idStr) {
+  const id = parseFloat(idStr) || idStr;
+  if (_expState.selectedSplit.includes(id)) {
+    if (_expState.selectedSplit.length === 1) return; // keep at least 1
+    _expState.selectedSplit = _expState.selectedSplit.filter(x => x !== id);
+  } else {
+    _expState.selectedSplit.push(id);
+  }
+  document.getElementById('mc-' + idStr)?.classList.toggle('selected', _expState.selectedSplit.includes(id));
+  updateEvenPreview();
+  if (_expState.splitType === 'custom') renderCustomAmounts();
+  validateExpForm();
+}
+
+function selectAllMembers() {
+  _expState.selectedSplit = _expState.members.map(m => m.member_id);
+  _expState.members.forEach(m => document.getElementById('mc-' + m.member_id)?.classList.add('selected'));
+  updateEvenPreview();
+  if (_expState.splitType === 'custom') renderCustomAmounts();
+}
+
+function clearMembers() {
+  _expState.selectedSplit = _expState.me ? [_expState.me.member_id] : [_expState.members[0]?.member_id];
+  _expState.members.forEach(m => {
+    const el = document.getElementById('mc-' + m.member_id);
+    el?.classList.toggle('selected', _expState.selectedSplit.includes(m.member_id));
+  });
+  updateEvenPreview();
+  if (_expState.splitType === 'custom') renderCustomAmounts();
+}
+
+function setSplitType(type) {
+  _expState.splitType = type;
+  document.getElementById('st-even').classList.toggle('active', type === 'even');
+  document.getElementById('st-custom').classList.toggle('active', type === 'custom');
+  document.getElementById('even-preview').classList.toggle('hidden', type !== 'even');
+  document.getElementById('custom-split-section').classList.toggle('hidden', type !== 'custom');
+  if (type === 'even') updateEvenPreview();
+  else renderCustomAmounts();
+  validateExpForm();
+}
+
+function updateEvenPreview() {
+  const amt  = parseFloat(document.getElementById('exp-amount')?.value) || 0;
+  const cnt  = _expState.selectedSplit.length;
+  const prev = document.getElementById('even-preview-text');
+  if (!prev) return;
+  if (amt > 0 && cnt > 0) {
+    const each = Math.round((amt / cnt) * 100) / 100;
+    prev.textContent = `✓ Each person owes ₹${formatAmount(each)} (${cnt} people)`;
+    prev.style.background = 'var(--success-light)';
+    prev.style.color = 'var(--success)';
+  } else {
+    prev.textContent = 'Enter amount and select members';
+    prev.style.background = 'var(--primary-faint)';
+    prev.style.color = 'var(--primary)';
+  }
+}
+
+function renderCustomAmounts() {
+  const section = document.getElementById('custom-amounts');
+  if (!section) return;
+  const total = parseFloat(document.getElementById('exp-amount')?.value) || 0;
+
+  // Load existing custom amounts from editing
+  const existingSplits = _expState.editing ? DB.getSplitsByExpense(_expState.editing.expense_id) : [];
+
+  section.innerHTML = _expState.selectedSplit.map(id => {
+    const m   = _expState.members.find(x => x.member_id === id);
+    const old = existingSplits.find(s => s.member_id === id);
+    return `<div class="custom-amount-row">
+      <div class="flex-center gap-8" style="flex:1">
+        ${avatar(m.member_name, m.color_index, 'avatar-sm')}
+        <span style="font-size:13px;font-weight:600">${m.member_name}</span>
+      </div>
+      <div class="input-prefix-wrap" style="width:110px">
+        <span class="prefix" style="font-size:13px">₹</span>
+        <input type="number" style="padding:8px 10px 8px 22px;font-size:13px;font-weight:600;text-align:right"
+          min="0" step="0.01" placeholder="0"
+          value="${old ? old.amount_owed : ''}"
+          data-member-id="${id}" oninput="updateCustomBar(${total})"/>
+      </div>
+    </div>`;
+  }).join('');
+
+  updateCustomBar(total);
+}
+
+function updateCustomBar(total) {
+  const inputs = document.querySelectorAll('#custom-amounts input[data-member-id]');
+  let assigned = 0;
+  inputs.forEach(inp => { assigned += parseFloat(inp.value) || 0; });
+  assigned = Math.round(assigned * 100) / 100;
+  total = parseFloat(document.getElementById('exp-amount')?.value) || total;
+
+  const pct  = total > 0 ? Math.min((assigned / total) * 100, 100) : 0;
+  const bar  = document.getElementById('split-bar');
+  const stat = document.getElementById('split-status-text');
+  if (!bar || !stat) return;
+
+  bar.style.width = pct + '%';
+  const diff = Math.round((total - assigned) * 100) / 100;
+
+  if (Math.abs(diff) < 0.01) {
+    bar.className = 'split-bar ok'; stat.className = 'split-status ok';
+    stat.textContent = `✓ Amounts match ₹${formatAmount(total)}`;
+  } else if (assigned > total) {
+    bar.className = 'split-bar over'; stat.className = 'split-status over';
+    stat.textContent = `Over by ₹${formatAmount(assigned - total)}`;
+  } else {
+    bar.className = 'split-bar partial'; stat.className = 'split-status partial';
+    stat.textContent = `₹${formatAmount(assigned)} of ₹${formatAmount(total)} assigned`;
+  }
+  validateExpForm();
+}
+
+function validateExpForm() {
+  const title  = document.getElementById('exp-title')?.value.trim();
+  const amount = parseFloat(document.getElementById('exp-amount')?.value);
+  const btn    = document.getElementById('save-btn');
+  if (!btn) return;
+
+  let valid = title && amount > 0 && _expState.selectedPayer && _expState.selectedSplit.length > 0;
+
+  if (valid && _expState.splitType === 'custom') {
+    const inputs = document.querySelectorAll('#custom-amounts input[data-member-id]');
+    let assigned = 0;
+    inputs.forEach(inp => assigned += parseFloat(inp.value) || 0);
+    assigned = Math.round(assigned * 100) / 100;
+    const total = Math.round(amount * 100) / 100;
+    valid = Math.abs(total - assigned) < 0.01;
+  }
+
+  btn.disabled = !valid;
+}
+
+function getSplitsFromForm() {
+  const total = parseFloat(document.getElementById('exp-amount').value);
+  const cnt   = _expState.selectedSplit.length;
+
+  if (_expState.splitType === 'even') {
+    const each = Math.round((total / cnt) * 100) / 100;
+    return _expState.selectedSplit.map(id => ({ member_id: id, amount_owed: each }));
+  } else {
+    const inputs = document.querySelectorAll('#custom-amounts input[data-member-id]');
+    return Array.from(inputs).map(inp => ({
+      member_id: parseFloat(inp.dataset.memberId) || inp.dataset.memberId,
+      amount_owed: parseFloat(inp.value) || 0
+    }));
+  }
+}
+
+function saveExpense() {
+  const title  = document.getElementById('exp-title').value.trim();
+  const amount = parseFloat(document.getElementById('exp-amount').value);
+  const note   = document.getElementById('exp-note').value.trim();
+  const splits = getSplitsFromForm();
+  const data = {
+    trip_id: _expState.trip.trip_id, title, total_amount: amount,
+    paid_by: _expState.selectedPayer, added_by: _expState.me?.member_id,
+    category_id: _expState.selectedCategory, split_type: _expState.splitType,
+    note, splits
+  };
+
+  if (_expState.editing) {
+    DB.updateExpense(_expState.editing.expense_id, data, Session.getToken(_expState.tripCode));
+    showToast('Expense updated ✓', 'success');
+  } else {
+    DB.addExpense(data);
+    showToast('Expense added ✓', 'success');
+  }
+  Router.navigate('/trip/' + _expState.tripCode + '/dashboard');
+}
+
+function deleteExpenseConfirm() {
+  showModal(
+    'Delete Expense',
+    'This will remove the expense and recalculate all balances for everyone.',
+    'Delete',
+    () => {
+      DB.deleteExpense(_expState.editing.expense_id, Session.getToken(_expState.tripCode));
+      showToast('Expense deleted', '');
+      Router.navigate('/trip/' + _expState.tripCode + '/dashboard');
+    },
+    true
+  );
+}
+
+// pages/balances.js
+function renderBalances(tripCode) {
+  const trip = DB.getTripByCode(tripCode);
+  if (!trip) { Router.navigate('/'); return; }
+
+  const me           = Session.getMember(tripCode);
+  const balances     = DB.getBalances(trip.trip_id);
+  const settlements  = DB.calculateSettlements(trip.trip_id);
+  const myBalance    = balances.find(b => b.member_id === me?.member_id);
+  const net          = myBalance?.net_balance || 0;
+
+  // Who I owe — I need to pay them
+  const iOwe = settlements.filter(s => me && s.payer_id === me.member_id);
+  // Who owes me
+  const owedToMe = settlements.filter(s => me && s.receiver_id === me.member_id);
+
+  const app = document.getElementById('app');
+  app.innerHTML = `
+  ${renderBottomNav(tripCode, 'balances')}
+
+  <div class="top-bar">
+    <button class="back-btn" onclick="Router.navigate('/trip/${tripCode}/dashboard')">←</button>
+    <div class="top-bar-title">Settle Up</div>
+    <div class="top-bar-side"></div>
+  </div>
+
+  <div class="page-inner-sm" style="padding-top:20px">
+
+    <div class="net-balance-card" style="background:${net > 0 ? 'var(--success-light)' : net < 0 ? 'var(--danger-light)' : '#F0EDE8'}">
+      <div class="nb-label" style="color:${net > 0 ? 'var(--success)' : net < 0 ? 'var(--danger)' : 'var(--text-muted)'}">
+        ${net > 0 ? 'You are owed' : net < 0 ? 'You owe in total' : 'You are all settled'}
+      </div>
+      <div class="nb-amount" style="color:${net > 0 ? 'var(--success)' : net < 0 ? 'var(--danger)' : 'var(--text-muted)'}">
+        ₹${formatAmount(Math.abs(net))}
+      </div>
+      <div class="nb-sub" style="color:${net > 0 ? 'var(--success)' : net < 0 ? 'var(--danger)' : 'var(--text-muted)'}">
+        ${net > 0 ? 'People owe you money' : net < 0 ? 'You need to pay people' : 'Nothing to settle 🎉'}
+      </div>
+    </div>
+
+    ${iOwe.length > 0 ? `
+    <div class="section-heading"><h3>You owe</h3></div>
+    <div class="card" style="margin-bottom:16px">
+      ${iOwe.map(s => {
+        const rec = DB.getMemberById(s.receiver_id);
+        return `<div class="balance-row">
+          <div class="flex-center gap-8">
+            ${rec ? avatar(rec.member_name, rec.color_index, 'avatar-sm') : ''}
+            <div class="balance-info">
+              <div class="balance-name">${s.receiver}</div>
+              <div class="balance-sub">You need to pay</div>
+            </div>
+          </div>
+          <div class="flex-center gap-8">
+            <div class="balance-amount amount-negative">₹${formatAmount(s.amount)}</div>
+            <button class="btn-settle" onclick="markPaid('${tripCode}',${s.payer_id},${s.receiver_id})">Paid ✓</button>
+          </div>
+        </div>`;
+      }).join('')}
+    </div>` : ''}
+
+    ${owedToMe.length > 0 ? `
+    <div class="section-heading"><h3>Owed to you</h3></div>
+    <div class="card" style="margin-bottom:16px">
+      ${owedToMe.map(s => {
+        const pay = DB.getMemberById(s.payer_id);
+        const msg = `Hey ${s.payer}, you owe me ₹${formatAmount(s.amount)} from ${trip.trip_name}! Please settle up 🙏`;
+        return `<div class="balance-row">
+          <div class="flex-center gap-8">
+            ${pay ? avatar(pay.member_name, pay.color_index, 'avatar-sm') : ''}
+            <div class="balance-info">
+              <div class="balance-name">${s.payer}</div>
+              <div class="balance-sub">Owes you</div>
+            </div>
+          </div>
+          <div class="flex-center gap-8">
+            <div class="balance-amount amount-positive">₹${formatAmount(s.amount)}</div>
+            <button class="btn-remind" onclick="copyToClipboard('${msg.replace(/'/g,"\\'")}','Reminder copied!')">Remind 📋</button>
+          </div>
+        </div>`;
+      }).join('')}
+    </div>` : ''}
+
+    ${settlements.length > 0 ? `
+    <div class="section-heading"><h3>Smart Settlement Plan</h3></div>
+    <p class="label" style="margin-bottom:12px;color:var(--text-muted)">Minimum transactions for everyone to settle up</p>
+    <div class="card" style="margin-bottom:16px">
+      ${settlements.map((s, i) => `
+        <div class="settlement-row">
+          <div class="s-from">${s.payer}</div>
+          <div class="s-arrow">→</div>
+          <div class="s-to">${s.receiver}</div>
+          <div class="s-amount">₹${formatAmount(s.amount)}</div>
+        </div>`).join('')}
+    </div>` : `
+    <div class="empty-state">
+      <div class="empty-icon">🎉</div>
+      <h3>All settled!</h3>
+      <p>No outstanding balances in this trip</p>
+    </div>`}
+
+    <div class="section-heading"><h3>All Balances</h3></div>
+    <div class="card">
+      ${balances.map(b => `
+        <div class="balance-row">
+          <div class="flex-center gap-8">
+            ${avatar(b.member_name, b.color_index, 'avatar-sm')}
+            <div class="balance-info">
+              <div class="balance-name">${b.member_name}${me && b.member_id === me.member_id ? ' <span class="badge badge-primary" style="font-size:10px">You</span>' : ''}</div>
+              <div class="balance-sub">Paid ₹${formatAmount(b.total_paid)} · Owes ₹${formatAmount(b.total_owed)}</div>
+            </div>
+          </div>
+          <div class="balance-amount ${b.net_balance > 0.01 ? 'amount-positive' : b.net_balance < -0.01 ? 'amount-negative' : 'amount-zero'}">
+            ${b.net_balance >= 0 ? '+' : ''}₹${formatAmount(Math.abs(b.net_balance))}
+          </div>
+        </div>`).join('')}
+    </div>
+
+    <div style="height:32px"></div>
+  </div>`;
+}
+
+function markPaid(tripCode, payerId, receiverId) {
+  const trip = DB.getTripByCode(tripCode);
+  const me   = Session.getMember(tripCode);
+  if (me) DB.logActivity(trip.trip_id, me.member_id, 'settle', `Marked payment as settled`);
+  showToast('Marked as paid ✓', 'success');
+  renderBalances(tripCode);
+}
+
+// pages/summary.js
+function renderSummary(tripCode) {
+  const trip = DB.getTripByCode(tripCode);
+  if (!trip) { Router.navigate('/'); return; }
+
+  const members  = DB.getMembersByTrip(trip.trip_id);
+  const expenses = DB.getExpensesByTrip(trip.trip_id);
+  const balances = DB.getBalances(trip.trip_id);
+  const total    = expenses.reduce((s, e) => s + parseFloat(e.total_amount), 0);
+  const perPerson = members.length > 0 ? Math.round((total / members.length) * 100) / 100 : 0;
+
+  // Category breakdown
+  const catTotals = CATEGORIES.map(c => ({
+    ...c,
+    total: expenses.filter(e => e.category_id === c.id).reduce((s, e) => s + parseFloat(e.total_amount), 0)
+  })).filter(c => c.total > 0).sort((a, b) => b.total - a.total);
+
+  const app = document.getElementById('app');
+  app.innerHTML = `
+  ${renderBottomNav(tripCode, 'summary')}
+
+  <div class="top-bar">
+    <button class="back-btn" onclick="Router.navigate('/trip/${tripCode}/dashboard')">←</button>
+    <div class="top-bar-title">Trip Summary</div>
+    <div class="top-bar-side"></div>
+  </div>
+
+  <div class="page-inner" style="padding-top:20px">
+
+    <div class="card" style="text-align:center;margin-bottom:16px;background:var(--surface-alt);border-color:#FFD4C0">
+      <div class="label" style="margin-bottom:6px">Total Trip Cost</div>
+      <div style="font-size:40px;font-weight:800;color:var(--primary)">₹${formatAmount(total)}</div>
+      <div class="label" style="margin-top:6px">₹${formatAmount(perPerson)} fair share per person · ${members.length} members</div>
+    </div>
+
+    <div class="section-heading"><h3>Spending by Category</h3></div>
+    <div class="card" style="margin-bottom:16px">
+      ${catTotals.length === 0 ? '<p class="tiny" style="text-align:center;padding:16px">No expenses yet</p>' :
+        catTotals.map(c => {
+          const pct = total > 0 ? Math.round((c.total / total) * 100) : 0;
+          const barColors = { 1:'#FF8C5A', 2:'#378ADD', 3:'#2D9B6F', 4:'#A855F7', 5:'#888780' };
+          return `<div class="cat-bar-row">
+            <div class="cat-bar-label">${c.emoji} ${c.name}</div>
+            <div class="cat-bar-track">
+              <div class="cat-bar-fill" style="width:${pct}%;background:${barColors[c.id]}"></div>
+            </div>
+            <div class="cat-bar-val">₹${formatAmount(c.total)}</div>
+          </div>`;
+        }).join('')
+      }
+    </div>
+
+    <div class="section-heading"><h3>Who Paid What</h3></div>
+    <div class="card" style="margin-bottom:16px">
+      ${balances.map(b => {
+        const pct = total > 0 ? Math.round((b.total_paid / total) * 100) : 0;
+        const diff = Math.round((b.total_paid - perPerson) * 100) / 100;
+        return `<div style="margin-bottom:16px">
+          <div class="flex-between mb-8">
+            <div class="flex-center gap-8">
+              ${avatar(b.member_name, b.color_index, 'avatar-sm')}
+              <span style="font-size:14px;font-weight:600">${b.member_name}</span>
+            </div>
+            <div class="text-right">
+              <div style="font-size:14px;font-weight:700">₹${formatAmount(b.total_paid)}</div>
+              <div class="tiny ${diff > 0 ? 'amount-positive' : diff < 0 ? 'amount-negative' : ''}" style="font-size:11px">
+                ${diff > 0 ? `+₹${formatAmount(diff)} extra` : diff < 0 ? `-₹${formatAmount(Math.abs(diff))} less` : 'Fair share'}
+              </div>
+            </div>
+          </div>
+          <div style="height:6px;background:var(--border);border-radius:3px;overflow:hidden">
+            <div style="height:100%;width:${pct}%;background:var(--primary);border-radius:3px;transition:width 0.4s"></div>
+          </div>
+        </div>`;
+      }).join('')}
+    </div>
+
+    <div class="section-heading"><h3>All Expenses (${expenses.length})</h3></div>
+    <div class="card" style="margin-bottom:16px">
+      ${expenses.length === 0 ? '<p class="tiny" style="text-align:center;padding:16px">No expenses</p>' :
+        expenses.map(e => {
+          const cat = CATEGORIES.find(c => c.id === e.category_id) || CATEGORIES[4];
+          const paidBy = members.find(m => m.member_id === e.paid_by);
+          return `<div class="flex-between" style="padding:10px 0;border-bottom:1px solid var(--border)">
+            <div class="flex-center gap-8">
+              <span style="font-size:18px">${cat.emoji}</span>
+              <div>
+                <div style="font-size:13px;font-weight:600">${e.title}</div>
+                <div class="tiny">${paidBy?.member_name || '?'} · ${formatDate(e.created_at)}</div>
+              </div>
+            </div>
+            <div style="font-size:14px;font-weight:700">₹${formatAmount(e.total_amount)}</div>
+          </div>`;
+        }).join('')
+      }
+    </div>
+
+    <button class="btn btn-outline btn-full" onclick="shareTrip('${tripCode}')">📋 Copy Summary to Share</button>
+    <div style="height:32px"></div>
+  </div>`;
+}
+
+function shareTrip(tripCode) {
+  const trip     = DB.getTripByCode(tripCode);
+  const members  = DB.getMembersByTrip(trip.trip_id);
+  const expenses = DB.getExpensesByTrip(trip.trip_id);
+  const balances = DB.getBalances(trip.trip_id);
+  const total    = expenses.reduce((s, e) => s + parseFloat(e.total_amount), 0);
+  const settlements = DB.calculateSettlements(trip.trip_id);
+
+  let msg = `✈️ *${trip.trip_name} — Expense Summary*\n`;
+  msg += `📍 ${trip.destination || ''}\n`;
+  msg += `💰 Total: ₹${formatAmount(total)} | Per person: ₹${formatAmount(total / members.length)}\n\n`;
+  msg += `*Who Paid:*\n`;
+  balances.forEach(b => { msg += `• ${b.member_name}: ₹${formatAmount(b.total_paid)}\n`; });
+  msg += `\n*To Settle:*\n`;
+  if (settlements.length === 0) msg += `• All settled! 🎉\n`;
+  else settlements.forEach(s => { msg += `• ${s.payer} → ${s.receiver}: ₹${formatAmount(s.amount)}\n`; });
+  msg += `\n_Split with VacationSplit_`;
+
+  copyToClipboard(msg, 'Summary copied! Paste in WhatsApp 🎉');
+}
+
+// app.js — wire everything together
+
+function renderBottomNav(tripCode, active) {
+  return `<div class="bottom-nav">
+    <button class="nav-item ${active==='dashboard'?'active':''}" onclick="Router.navigate('/trip/${tripCode}/dashboard')">
+      <svg class="nav-icon-svg" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+      <span class="nav-label">Home</span>
+    </button>
+    <button class="nav-item ${active==='add'?'active':''}" onclick="Router.navigate('/trip/${tripCode}/add-expense')">
+      <svg class="nav-icon-svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+      <span class="nav-label">Add</span>
+    </button>
+    <button class="nav-item ${active==='balances'?'active':''}" onclick="Router.navigate('/trip/${tripCode}/balances')">
+      <svg class="nav-icon-svg" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+      <span class="nav-label">Balances</span>
+    </button>
+    <button class="nav-item ${active==='summary'?'active':''}" onclick="Router.navigate('/trip/${tripCode}/summary')">
+      <svg class="nav-icon-svg" viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+      <span class="nav-label">Summary</span>
+    </button>
+  </div>`;
+}
+
+// Register routes
+Router.register('/', () => renderHome());
+Router.register('/trip/:code/dashboard',   ({ code }) => renderDashboard(code));
+Router.register('/trip/:code/add-expense', ({ code }) => renderAddExpense(code));
+Router.register('/trip/:code/edit-expense/:id', ({ code, id }) => renderAddExpense(code, id));
+Router.register('/trip/:code/balances',    ({ code }) => renderBalances(code));
+Router.register('/trip/:code/summary',     ({ code }) => renderSummary(code));
+
+// Boot
+Router.init();
+</script>
+</body>
+</html>
