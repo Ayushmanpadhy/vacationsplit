@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Monorepo for VacationSplit",
   "engines": {
-    "node": "22.19.0"
+    "node": "20.19.0"
   },
   "scripts": {
     "build": "npm run build:prod",
