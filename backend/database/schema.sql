@@ -1,5 +1,6 @@
-CREATE DATABASE IF NOT EXISTS vacation_split;
-USE vacation_split;
+-- Database schema for VacationSplit
+-- The database name should be handled by the connection logic/environment variables.
+
 
 -- Trips Table
 CREATE TABLE IF NOT EXISTS trips (
