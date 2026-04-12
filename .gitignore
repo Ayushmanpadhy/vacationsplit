@@ -1,7 +1,23 @@
+# Node / npm
 node_modules/
-dist/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.npm
 .env
-.DS_Store
-*.log
-.angular/
+
+# Angular
+/dist
+/.angular
+/frontend/dist
+/frontend/.angular
+
+# IDEs
 .vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
