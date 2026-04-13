@@ -148,9 +148,29 @@ async function renderBalances(tripCode) {
   }
 }
 
-/** Mark a payment as settled (logs activity + toast) */
-function markPaid(tripCode) {
-  showToast('Marked as paid ✓', 'success');
-  // Re-render to update UI
-  renderBalances(tripCode);
+/** Mark a payment as settled (records a real transaction) */
+async function markPaid(tripCode, payerId, receiverId, amount, payerName, receiverName) {
+  const trip = await API.getTripByCode(tripCode);
+  const me = await Session.getMember(tripCode);
+
+  showLoading();
+  try {
+    await API.addExpense({
+      trip_id: trip.id,
+      title: `Settlement: ${payerName} paid ${receiverName}`,
+      total_amount: amount,
+      paid_by: payerId,
+      added_by: me?.id,
+      category_id: 6, // Settlement
+      split_type: 'even',
+      note: 'Automatic settlement payment',
+      splits: [{ member_id: receiverId, amount_owed: amount }]
+    });
+
+    showToast(`Settlement recorded! ✓`, 'success');
+    renderBalances(tripCode);
+  } catch (err) {
+    showToast('Failed to record settlement', 'error');
+    renderBalances(tripCode);
+  }
 }

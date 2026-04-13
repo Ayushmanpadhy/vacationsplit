@@ -138,8 +138,6 @@ function renderRecentTrips() {
   container.classList.remove('hidden');
 }
 
-}
-
 /** Toggle between Create and Join forms */
 function selectHomeCard(type) {
   document.getElementById('hc-create').classList.toggle('selected', type === 'create');
