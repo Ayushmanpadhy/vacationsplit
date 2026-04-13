@@ -120,6 +120,7 @@ function renderRecentTrips() {
   const container = document.getElementById('home-history');
   if (!container || history.length === 0) return;
 
+  container.innerHTML = `
     <div class="recent-trips-home-title flex-between">
       <span>Recent Trips</span>
       <button class="link-btn-muted" style="font-size:10px" onclick="forgetAllHistory()">Forget All</button>

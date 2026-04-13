@@ -643,3 +643,11 @@ input::placeholder, textarea::placeholder { color: var(--text-muted); }
 .recent-trips-home { width: 100%; max-width: 420px; margin-top: 24px; animation: fadeIn 0.4s ease; }
 .recent-trips-home-title { font-size: 12px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 12px; }
 
+/* ── Utility Classes ─────────────────────────────────── */
+.flex-between { display: flex; align-items: center; justify-content: space-between; }
+.link-btn-muted { background: none; border: none; color: var(--text-muted); cursor: pointer; text-decoration: underline; font-family: inherit; }
+.link-btn-muted:hover { color: var(--primary); }
+.mt-24 { margin-top: 24px; }
+.mt-12 { margin-top: 12px; }
+
+
