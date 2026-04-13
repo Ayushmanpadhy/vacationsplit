@@ -30,6 +30,7 @@ const API = {
   // ── Trips ──────────────────────────────────────────────
   createTrip(data)     { return this.request('POST', '/trips', data); },
   getTripByCode(code)  { return this.request('GET', `/trips/${code.toUpperCase()}`); },
+  deleteTrip(code, tkn) { return this.request('DELETE', `/trips/${code.toUpperCase()}?member_token=${tkn}`); },
 
   // ── Members ────────────────────────────────────────────
   getMembersByTrip(tripId)   { return this.request('GET', `/members/trip/${tripId}`); },

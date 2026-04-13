@@ -76,6 +76,9 @@ router.post('/', async (req, res) => {
       [tripId, creatorId, 'create', `Trip "${name.trim()}" created by ${creator_name.trim()}`]
     );
 
+    // Set creator in trips table
+    await connection.query('UPDATE trips SET created_by = ? WHERE id = ?', [creatorId, tripId]);
+
     await connection.commit();
 
     res.status(201).json({
@@ -110,6 +113,41 @@ router.get('/:code', async (req, res) => {
   } catch (err) {
     console.error('Get trip error:', err);
     res.status(500).json({ error: 'Failed to fetch trip' });
+  }
+});
+
+// ── Delete Trip ──────────────────────────────────────────
+router.delete('/:code', async (req, res) => {
+  const { code } = req.params;
+  const { member_token } = req.query;
+  const pool = req.app.locals.pool;
+
+  if (!member_token) {
+    return res.status(401).json({ error: 'Authorization required' });
+  }
+
+  try {
+    // 1. Find trip
+    const [trips] = await pool.query('SELECT * FROM trips WHERE code = ?', [code.toUpperCase()]);
+    if (trips.length === 0) return res.status(404).json({ error: 'Trip not found' });
+    const trip = trips[0];
+
+    // 2. Find member and verify ownership
+    const [members] = await pool.query('SELECT * FROM members WHERE token = ? AND trip_id = ?', [member_token, trip.id]);
+    if (members.length === 0) return res.status(403).json({ error: 'Unauthorized' });
+    const member = members[0];
+
+    if (trip.created_by !== member.id) {
+      return res.status(403).json({ error: 'Only the creator can delete the trip' });
+    }
+
+    // 3. Delete trip (cascades to members, expenses, etc.)
+    await pool.query('DELETE FROM trips WHERE id = ?', [trip.id]);
+
+    res.json({ success: true, message: 'Trip deleted permanently' });
+  } catch (err) {
+    console.error('Delete trip error:', err);
+    res.status(500).json({ error: 'Failed to delete trip' });
   }
 });
 

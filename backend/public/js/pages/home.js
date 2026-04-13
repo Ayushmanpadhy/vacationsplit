@@ -120,8 +120,10 @@ function renderRecentTrips() {
   const container = document.getElementById('home-history');
   if (!container || history.length === 0) return;
 
-  container.innerHTML = `
-    <div class="recent-trips-home-title">Recent Trips</div>
+    <div class="recent-trips-home-title flex-between">
+      <span>Recent Trips</span>
+      <button class="link-btn-muted" style="font-size:10px" onclick="forgetAllHistory()">Forget All</button>
+    </div>
     <div class="history-list">
       ${history.map(h => `
         <div class="history-item" onclick="Session.restoreFromHistory('${h.code}'); Router.navigate('/trip/${h.code}/dashboard')">
@@ -134,6 +136,21 @@ function renderRecentTrips() {
         </div>`).join('')}
     </div>`;
   container.classList.remove('hidden');
+}
+
+/** Wipe all trip history from this device */
+function forgetAllHistory() {
+  showModal(
+    'Forget All History?',
+    'This will remove all recent trips from this device. You will need the trip codes to join them again.',
+    'Yes, Forget All',
+    () => {
+      localStorage.removeItem('vs_history');
+      renderRecentTrips();
+      showToast('History cleared', '');
+    },
+    true
+  );
 }
 
 /** Toggle between Create and Join forms */

@@ -10,7 +10,9 @@ CREATE TABLE IF NOT EXISTS trips (
     destination VARCHAR(255),
     start_date  DATE,
     end_date    DATE,
-    created_at  TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    created_by  INT,
+    created_at  TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (created_by) REFERENCES members(id) ON DELETE SET NULL
 );
 
 -- Members

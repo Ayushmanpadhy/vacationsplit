@@ -138,8 +138,13 @@ async function renderDashboard(tripCode) {
     </div>`;
 
   } catch (err) {
-    console.error('Dashboard error:', err);
-    showToast('Failed to load dashboard', 'error');
+    if (err.message.includes('404')) {
+      History.remove(tripCode);
+      showToast('Trip was deleted or not found', 'error');
+    } else {
+      console.error('Dashboard error:', err);
+      showToast('Failed to load dashboard', 'error');
+    }
     Router.navigate('/');
   }
 }
@@ -164,6 +169,12 @@ async function showProfileMenu() {
         <button class="btn btn-ghost" onclick="goToHome()">➕ Add Another Trip</button>
         <button class="btn btn-primary" onclick="copyToClipboard('${tripCode}', 'Code copied!')">📋 Share Code</button>
       </div>
+
+      ${trip.created_by === me?.id ? `
+        <div style="margin-top:12px">
+          <button class="btn btn-danger btn-full btn-sm" onclick="deleteTripPermanently('${tripCode}')">🗑️ Delete Trip Permanently</button>
+        </div>` : ''
+      }
 
       <div class="history-section">
         <h4>Recent Trips</h4>
@@ -193,6 +204,27 @@ function switchTrip(code) {
   document.getElementById('modal-overlay').classList.add('hidden');
   Session.restoreFromHistory(code);
   Router.navigate('/trip/' + code + '/dashboard');
+}
+
+/** Delete a trip permanently (Owner only) */
+function deleteTripPermanently(code) {
+  showModal(
+    'Delete Trip?',
+    'This will permanently delete the trip, all expenses, and history for EVERYONE. This action cannot be undone.',
+    'Delete Permanently',
+    async () => {
+      try {
+        const token = Session.getToken(code);
+        await API.deleteTrip(code, token);
+        History.remove(code);
+        showToast('Trip deleted permanently', 'success');
+        Router.navigate('/');
+      } catch (err) {
+        showToast(err.message, 'error');
+      }
+    },
+    true
+  );
 }
 
 /** Go back home to add another trip without clearing session */
