@@ -28,6 +28,9 @@ function renderHome() {
       </div>
     </div>
 
+    <!-- Recent Trips (History) -->
+    <div id="home-history" class="recent-trips-home hidden"></div>
+
     <!-- Create Trip Form -->
     <div class="home-form hidden" id="form-create">
       <h3 style="margin-bottom:16px">Create Your Trip</h3>
@@ -107,6 +110,30 @@ function renderHome() {
       </button>
     </div>
   </div>`;
+
+  renderRecentTrips();
+}
+
+/** Render recent trips from history */
+function renderRecentTrips() {
+  const history = History.getAll();
+  const container = document.getElementById('home-history');
+  if (!container || history.length === 0) return;
+
+  container.innerHTML = `
+    <div class="recent-trips-home-title">Recent Trips</div>
+    <div class="history-list">
+      ${history.map(h => `
+        <div class="history-item" onclick="Router.navigate('/trip/${h.code}/dashboard')">
+          ${avatar(h.member, h.color, 'avatar-sm')}
+          <div class="h-body">
+            <div class="h-name">${h.name}</div>
+            <div class="h-meta">${h.member} · ${h.code}</div>
+          </div>
+          <div class="h-arrow">→</div>
+        </div>`).join('')}
+    </div>`;
+  container.classList.remove('hidden');
 }
 
 /** Toggle between Create and Join forms */
@@ -176,7 +203,7 @@ async function submitCreate() {
     });
 
     // Save session
-    Session.setMember(result.trip_code, result.member_token);
+    Session.setMember(result.trip_code, result.member_token, name, creator, result.color_index || 0);
     showToast('Trip created! 🎉', 'success');
     Router.navigate('/trip/' + result.trip_code + '/dashboard');
   } catch (err) {
@@ -231,7 +258,10 @@ async function submitJoin() {
 
   try {
     const trip = await API.getTripByCode(code);
-    Session.setMember(trip.code, token);
+    const members = await API.getMembersByTrip(trip.id);
+    const me = members.find(m => m.token === token);
+
+    Session.setMember(trip.code, token, trip.name, me?.name || 'Member', me?.color_index || 0);
     showToast('Welcome to the trip! 🏖️', 'success');
     Router.navigate('/trip/' + trip.code + '/dashboard');
   } catch {

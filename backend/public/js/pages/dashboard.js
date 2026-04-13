@@ -29,9 +29,9 @@ async function renderDashboard(tripCode) {
     ${renderBottomNav(tripCode, 'dashboard')}
 
     <div class="top-bar">
-      <div class="top-bar-side">
-        ${me ? avatar(me.name, me.color_index, 'avatar-sm') : ''}
-        <span style="font-size:13px;font-weight:700;color:var(--text);white-space:nowrap">${me ? me.name.split(' ')[0] : ''}</span>
+      <div class="top-bar-side profile-trigger" onclick="showProfileMenu()">
+        ${me ? avatar(me.name, me.color_index, 'avatar-sm') : avatar('Guest', 0, 'avatar-sm')}
+        <span style="font-size:13px;font-weight:700;color:var(--text);white-space:nowrap">${me ? me.name.split(' ')[0] : 'Profile'}</span>
       </div>
       <div class="top-bar-title">Dashboard</div>
       <div class="top-bar-side-right">
@@ -142,6 +142,64 @@ async function renderDashboard(tripCode) {
     showToast('Failed to load dashboard', 'error');
     Router.navigate('/');
   }
+}
+
+/** Show the profile menu modal with history */
+async function showProfileMenu() {
+  const tripCode = getCurrentTripCode();
+  const trip = await API.getTripByCode(tripCode);
+  const me = await Session.getMember(tripCode);
+  const history = History.getAll();
+
+  const overlay = document.getElementById('modal-overlay');
+  overlay.innerHTML = `
+    <div class="modal">
+      <div class="menu-header">
+        ${avatar(me?.name || 'Guest', me?.color_index || 0, 'avatar-lg')}
+        <div class="name">${me?.name || 'Trip Member'}</div>
+        <div class="trip-info">📍 ${trip.name}<br><span class="tiny">Code: ${trip.code}</span></div>
+      </div>
+
+      <div class="menu-actions">
+        <button class="btn btn-ghost" onclick="exitTrip('${tripCode}')">🚪 Exit Trip</button>
+        <button class="btn btn-primary" onclick="copyToClipboard('${tripCode}', 'Code copied!')">📋 Share Code</button>
+      </div>
+
+      <div class="history-section">
+        <h4>Recent Trips</h4>
+        <div class="history-list">
+          ${history.length <= 1 ? '<p class="tiny" style="text-align:center;padding:20px;color:var(--text-muted)">No other trips in history</p>' : 
+            history.filter(h => h.code !== tripCode).map(h => `
+              <div class="history-item" onclick="switchTrip('${h.code}')">
+                ${avatar(h.member, h.color, 'avatar-sm')}
+                <div class="h-body">
+                  <div class="h-name">${h.name}</div>
+                  <div class="h-meta">${h.member} · ${h.code}</div>
+                </div>
+                <div class="h-arrow">→</div>
+              </div>`).join('')
+          }
+        </div>
+      </div>
+
+      <button class="btn btn-ghost btn-full mt-24" onclick="document.getElementById('modal-overlay').classList.add('hidden')">Close</button>
+    </div>`;
+  
+  overlay.classList.remove('hidden');
+}
+
+/** Switch to a different trip from history */
+function switchTrip(code) {
+  document.getElementById('modal-overlay').classList.add('hidden');
+  Router.navigate('/trip/' + code + '/dashboard');
+}
+
+/** Exit the current trip and go home */
+function exitTrip(code) {
+  document.getElementById('modal-overlay').classList.add('hidden');
+  Session.clearSession(code);
+  showToast('Exited trip', '');
+  Router.navigate('/');
 }
 
 /** Render a single expense card */

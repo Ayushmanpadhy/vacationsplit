@@ -51,12 +51,42 @@ const API = {
   getActivity(tripId)        { return this.request('GET', `/activity/trip/${tripId}`); }
 };
 
-// ── Session Management ───────────────────────────────────
-// Stores member tokens per trip code in sessionStorage
+// ── Session & History Management ─────────────────────────
+
+const History = {
+  /** Save a trip to the local storage history */
+  add(tripCode, tripName, memberName, token, colorIdx) {
+    let history = this.getAll();
+    // Remove if already exists to move to top
+    history = history.filter(h => h.code !== tripCode);
+    history.unshift({ code: tripCode, name: tripName, member: memberName, token, color: colorIdx, date: new Date().toISOString() });
+    // Limit to 10 trips
+    localStorage.setItem('vs_history', JSON.stringify(history.slice(0, 10)));
+  },
+
+  /** Get all trips from history */
+  getAll() {
+    try {
+      return JSON.parse(localStorage.getItem('vs_history')) || [];
+    } catch {
+      return [];
+    }
+  },
+
+  /** Remove a trip from history */
+  remove(tripCode) {
+    const history = this.getAll().filter(h => h.code !== tripCode);
+    localStorage.setItem('vs_history', JSON.stringify(history));
+  }
+};
+
 const Session = {
-  /** Save a member token for a trip */
-  setMember(tripCode, token) {
+  /** Save a member token for a trip and add to history */
+  setMember(tripCode, token, tripName = '', memberName = '', colorIdx = 0) {
     sessionStorage.setItem('vs_token_' + tripCode, token);
+    if (tripName && memberName) {
+      History.add(tripCode, tripName, memberName, token, colorIdx);
+    }
   },
 
   /** Get the stored token for a trip */
@@ -64,12 +94,21 @@ const Session = {
     return sessionStorage.getItem('vs_token_' + tripCode);
   },
 
+  /** Clear the current session for a trip */
+  clearSession(tripCode) {
+    sessionStorage.removeItem('vs_token_' + tripCode);
+  },
+
   /** Get the current member's data from the API using their stored token */
   async getMember(tripCode) {
     const token = this.getToken(tripCode);
     if (!token) return null;
     try {
-      return await API.getMemberByToken(token);
+      const me = await API.getMemberByToken(token);
+      // Auto-update history if missing details (e.g. from direct code entry)
+      const trip = await API.getTripByCode(tripCode);
+      History.add(tripCode, trip.name, me.name, token, me.color_index);
+      return me;
     } catch {
       return null;
     }
