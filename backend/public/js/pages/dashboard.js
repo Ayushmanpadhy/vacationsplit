@@ -29,9 +29,14 @@ async function renderDashboard(tripCode) {
     ${renderBottomNav(tripCode, 'dashboard')}
 
     <div class="top-bar">
-      <div class="top-bar-side"></div>
+      <div class="top-bar-side">
+        ${me ? avatar(me.name, me.color_index, 'avatar-sm') : ''}
+        <span style="font-size:13px;font-weight:700;color:var(--text);white-space:nowrap">${me ? me.name.split(' ')[0] : ''}</span>
+      </div>
       <div class="top-bar-title">Dashboard</div>
-      <span class="trip-code-pill" onclick="copyToClipboard('${tripCode}','Code copied!')">${tripCode} 📋</span>
+      <div class="top-bar-side-right">
+        <span class="trip-code-pill" onclick="copyToClipboard('${tripCode}','Code copied!')">${tripCode} 📋</span>
+      </div>
     </div>
 
     <div class="page-inner" style="padding-top:16px">

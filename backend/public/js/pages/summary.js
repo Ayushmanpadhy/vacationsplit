@@ -30,9 +30,11 @@ async function renderSummary(tripCode) {
     ${renderBottomNav(tripCode, 'summary')}
 
     <div class="top-bar">
-      <button class="back-btn" onclick="Router.navigate('/trip/${tripCode}/dashboard')">←</button>
+      <div class="top-bar-side">
+        <button class="back-btn" onclick="Router.navigate('/trip/${tripCode}/dashboard')">←</button>
+      </div>
       <div class="top-bar-title">Trip Summary</div>
-      <div class="top-bar-side"></div>
+      <div class="top-bar-side-right"></div>
     </div>
 
     <div class="page-inner" style="padding-top:20px">

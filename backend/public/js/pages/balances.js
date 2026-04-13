@@ -27,9 +27,11 @@ async function renderBalances(tripCode) {
     ${renderBottomNav(tripCode, 'balances')}
 
     <div class="top-bar">
-      <button class="back-btn" onclick="Router.navigate('/trip/${tripCode}/dashboard')">←</button>
+      <div class="top-bar-side">
+        <button class="back-btn" onclick="Router.navigate('/trip/${tripCode}/dashboard')">←</button>
+      </div>
       <div class="top-bar-title">Settle Up</div>
-      <div class="top-bar-side"></div>
+      <div class="top-bar-side-right"></div>
     </div>
 
     <div class="page-inner-sm" style="padding-top:20px">

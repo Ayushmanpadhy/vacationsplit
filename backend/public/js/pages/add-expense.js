@@ -48,9 +48,11 @@ async function renderAddExpense(tripCode, expenseId = null) {
     const app = document.getElementById('app');
     app.innerHTML = `
     <div class="top-bar">
-      <button class="back-btn" onclick="Router.navigate('/trip/${tripCode}/dashboard')">←</button>
+      <div class="top-bar-side">
+        <button class="back-btn" onclick="Router.navigate('/trip/${tripCode}/dashboard')">←</button>
+      </div>
       <div class="top-bar-title">${editing ? 'Edit Expense' : 'Add Expense'}</div>
-      <div class="top-bar-side"></div>
+      <div class="top-bar-side-right"></div>
     </div>
 
     <div class="page-inner-sm" style="padding-top:20px">
