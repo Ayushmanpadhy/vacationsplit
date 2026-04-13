@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>VacationSplit ✈️ — Split Trip Expenses</title>
+  <meta name="description" content="Split trip expenses easily with your group. No signups required."/>
+  <meta name="theme-color" content="#FF6B35"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="/style.css"/>
+</head>
+<body>
+
+  <!-- App Root -->
+  <div id="app"></div>
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container"></div>
+
+  <!-- Modal Overlay -->
+  <div id="modal-overlay" class="hidden"></div>
+
+  <!-- Scripts (order matters: utils → api → pages → app) -->
+  <script src="/js/utils.js"></script>
+  <script src="/js/api.js"></script>
+  <script src="/js/pages/home.js"></script>
+  <script src="/js/pages/dashboard.js"></script>
+  <script src="/js/pages/add-expense.js"></script>
+  <script src="/js/pages/balances.js"></script>
+  <script src="/js/pages/summary.js"></script>
+  <script src="/js/app.js"></script>
+
+</body>
+</html>
