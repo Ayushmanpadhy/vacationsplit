@@ -18,7 +18,9 @@ const API = {
       const res = await fetch(API_BASE + path, opts);
       const data = await res.json();
       if (!res.ok) {
-        throw new Error(data.error || `Request failed (${res.status})`);
+        const err = new Error(data.error || `Request failed (${res.status})`);
+        err.status = res.status; // Attach status code
+        throw err;
       }
       return data;
     } catch (err) {

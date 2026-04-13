@@ -138,7 +138,7 @@ async function renderDashboard(tripCode) {
     </div>`;
 
   } catch (err) {
-    if (err.message.includes('404')) {
+    if (err.status === 404) {
       History.remove(tripCode);
       showToast('Trip was deleted or not found', 'error');
     } else {
