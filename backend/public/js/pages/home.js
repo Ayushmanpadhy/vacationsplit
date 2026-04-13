@@ -123,7 +123,6 @@ function renderRecentTrips() {
   container.innerHTML = `
     <div class="recent-trips-home-title flex-between">
       <span>Recent Trips</span>
-      <button class="link-btn-muted" style="font-size:10px" onclick="forgetAllHistory()">Forget All</button>
     </div>
     <div class="history-list">
       ${history.map(h => `
@@ -139,19 +138,6 @@ function renderRecentTrips() {
   container.classList.remove('hidden');
 }
 
-/** Wipe all trip history from this device */
-function forgetAllHistory() {
-  showModal(
-    'Forget All History?',
-    'This will remove all recent trips from this device. You will need the trip codes to join them again.',
-    'Yes, Forget All',
-    () => {
-      localStorage.removeItem('vs_history');
-      renderRecentTrips();
-      showToast('History cleared', '');
-    },
-    true
-  );
 }
 
 /** Toggle between Create and Join forms */
