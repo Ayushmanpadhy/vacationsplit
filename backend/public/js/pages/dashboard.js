@@ -161,7 +161,7 @@ async function showProfileMenu() {
       </div>
 
       <div class="menu-actions">
-        <button class="btn btn-ghost" onclick="exitTrip('${tripCode}')">🚪 Exit Trip</button>
+        <button class="btn btn-ghost" onclick="goToHome()">➕ Add Another Trip</button>
         <button class="btn btn-primary" onclick="copyToClipboard('${tripCode}', 'Code copied!')">📋 Share Code</button>
       </div>
 
@@ -191,14 +191,13 @@ async function showProfileMenu() {
 /** Switch to a different trip from history */
 function switchTrip(code) {
   document.getElementById('modal-overlay').classList.add('hidden');
+  Session.restoreFromHistory(code);
   Router.navigate('/trip/' + code + '/dashboard');
 }
 
-/** Exit the current trip and go home */
-function exitTrip(code) {
+/** Go back home to add another trip without clearing session */
+function goToHome() {
   document.getElementById('modal-overlay').classList.add('hidden');
-  Session.clearSession(code);
-  showToast('Exited trip', '');
   Router.navigate('/');
 }
 

@@ -124,7 +124,7 @@ function renderRecentTrips() {
     <div class="recent-trips-home-title">Recent Trips</div>
     <div class="history-list">
       ${history.map(h => `
-        <div class="history-item" onclick="Router.navigate('/trip/${h.code}/dashboard')">
+        <div class="history-item" onclick="Session.restoreFromHistory('${h.code}'); Router.navigate('/trip/${h.code}/dashboard')">
           ${avatar(h.member, h.color, 'avatar-sm')}
           <div class="h-body">
             <div class="h-name">${h.name}</div>

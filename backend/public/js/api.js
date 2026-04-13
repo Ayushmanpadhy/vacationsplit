@@ -91,10 +91,31 @@ const Session = {
 
   /** Get the stored token for a trip */
   getToken(tripCode) {
-    return sessionStorage.getItem('vs_token_' + tripCode);
+    let token = sessionStorage.getItem('vs_token_' + tripCode);
+    if (!token) {
+      // Try to recover from history if session is lost
+      const history = History.getAll();
+      const item = history.find(h => h.code === tripCode);
+      if (item) {
+        token = item.token;
+        sessionStorage.setItem('vs_token_' + tripCode, token);
+      }
+    }
+    return token;
   },
 
-  /** Clear the current session for a trip */
+  /** Restore a token from history to session storage */
+  restoreFromHistory(tripCode) {
+    const history = History.getAll();
+    const item = history.find(h => h.code === tripCode);
+    if (item) {
+      sessionStorage.setItem('vs_token_' + tripCode, item.token);
+      return true;
+    }
+    return false;
+  },
+
+  /** Clear the current session for a trip (unused now, keep for safety) */
   clearSession(tripCode) {
     sessionStorage.removeItem('vs_token_' + tripCode);
   },
@@ -105,9 +126,6 @@ const Session = {
     if (!token) return null;
     try {
       const me = await API.getMemberByToken(token);
-      // Auto-update history if missing details (e.g. from direct code entry)
-      const trip = await API.getTripByCode(tripCode);
-      History.add(tripCode, trip.name, me.name, token, me.color_index);
       return me;
     } catch {
       return null;
