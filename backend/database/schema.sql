@@ -11,8 +11,7 @@ CREATE TABLE IF NOT EXISTS trips (
     start_date  DATE,
     end_date    DATE,
     created_by  INT,
-    created_at  TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (created_by) REFERENCES members(id) ON DELETE SET NULL
+    created_at  TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 -- Members
@@ -65,3 +64,6 @@ CREATE TABLE IF NOT EXISTS activity_log (
     FOREIGN KEY (trip_id)   REFERENCES trips(id)   ON DELETE CASCADE,
     FOREIGN KEY (member_id) REFERENCES members(id) ON DELETE CASCADE
 );
+
+-- Housekeeping
+ALTER TABLE trips ADD CONSTRAINT fk_created_by FOREIGN KEY (created_by) REFERENCES members(id) ON DELETE SET NULL;
