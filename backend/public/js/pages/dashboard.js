@@ -161,7 +161,10 @@ async function showProfileMenu() {
     <div class="modal">
       <div class="menu-header">
         ${avatar(me?.name || 'Guest', me?.color_index || 0, 'avatar-lg')}
-        <div class="name">${me?.name || 'Trip Member'}</div>
+        <div class="name">
+          ${me?.name || 'Trip Member'}
+          ${trip.created_by === me?.id ? '<span class="owner-badge">OWNER</span>' : ''}
+        </div>
         <div class="trip-info">📍 ${trip.name}<br><span class="tiny">Code: ${trip.code}</span></div>
       </div>
 
@@ -171,8 +174,9 @@ async function showProfileMenu() {
       </div>
 
       ${trip.created_by === me?.id ? `
-        <div style="margin-top:12px">
+        <div style="margin-top:20px; padding-top:20px; border-top:1px dashed var(--border)">
           <button class="btn btn-danger btn-full btn-sm" onclick="deleteTripPermanently('${tripCode}')">🗑️ Delete Trip Permanently</button>
+          <p class="tiny" style="text-align:center;margin-top:8px">Owner only: This wipes the trip for everyone.</p>
         </div>` : ''
       }
 
