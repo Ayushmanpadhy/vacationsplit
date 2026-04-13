@@ -10,7 +10,8 @@ const CATEGORIES = [
   { id: 2, name: 'Hotel',    emoji: '🏨', bg: '#E0F0FF', color: '#005AB0' },
   { id: 3, name: 'Travel',   emoji: '🚗', bg: '#E0F5EC', color: '#006B3D' },
   { id: 4, name: 'Shopping', emoji: '🛍️', bg: '#F5E0FF', color: '#7A00B0' },
-  { id: 5, name: 'Other',    emoji: '📦', bg: '#F0EDE8', color: '#5A5550' }
+  { id: 5, name: 'Other',    emoji: '📦', bg: '#F0EDE8', color: '#5A5550' },
+  { id: 6, name: 'Settlement', emoji: '🤝', bg: '#E2F2FF', color: '#0078D4' }
 ];
 
 const MEMBER_COLORS = [

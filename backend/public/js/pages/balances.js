@@ -64,7 +64,7 @@ async function renderBalances(tripCode) {
             </div>
             <div class="flex-center gap-8">
               <div class="balance-amount amount-negative">₹${formatAmount(s.amount)}</div>
-              <button class="btn-settle" onclick="markPaid('${tripCode}')">Paid ✓</button>
+              <button class="btn-settle" onclick="markPaid('${tripCode}', ${s.payer_id}, ${s.receiver_id}, ${s.amount}, '${s.payer.replace(/'/g, "\\'")}', '${s.receiver.replace(/'/g, "\\'")}')">Paid ✓</button>
             </div>
           </div>`).join('')}
       </div>` : ''}
@@ -86,7 +86,10 @@ async function renderBalances(tripCode) {
             </div>
             <div class="flex-center gap-8">
               <div class="balance-amount amount-positive">₹${formatAmount(s.amount)}</div>
-              <button class="btn-remind" onclick="copyToClipboard(\`${msg}\`,'Reminder copied!')">Remind 📋</button>
+              <div style="display:flex;gap:4px">
+                <button class="btn-remind" onclick="copyToClipboard(\`${msg}\`,'Reminder copied!')">Remind 📋</button>
+                <button class="btn-settle" onclick="markPaid('${tripCode}', ${s.payer_id}, ${s.receiver_id}, ${s.amount}, '${s.payer.replace(/'/g, "\\'")}', '${s.receiver.replace(/'/g, "\\'")}')">Paid ✓</button>
+              </div>
             </div>
           </div>`;
         }).join('')}
