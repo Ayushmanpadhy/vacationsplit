@@ -4,7 +4,7 @@
   "description": "VacationSplit — Trip expense splitter backend",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js",
+    "start": "node init-db.js && node server.js",
     "dev": "nodemon server.js"
   },
   "keywords": ["vacation", "split", "expenses"],
